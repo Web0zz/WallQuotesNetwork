@@ -7,11 +7,11 @@ import com.web0zz.wallquotes.domain.repository.QuotesRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 
-class insertQuotesUseCase(
+class DeleteQuotesUseCase(
     private val quotesRepository: QuotesRepository,
     mainDispatcher: CoroutineDispatcher
 ) : UseCase<UseCase.None, Failure, Quotes>(mainDispatcher) {
     override suspend fun run(params: Quotes): Flow<Result<None, Failure>> {
-        return quotesRepository.insertQuotes(params)
+        return quotesRepository.deleteQuotes(params)
     }
 }

@@ -7,7 +7,7 @@ import com.web0zz.wallquotes.domain.repository.QuotesRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 
-class updateQuotesUseCase(
+class UpdateQuotesUseCase(
     private val quotesRepository: QuotesRepository,
     mainDispatcher: CoroutineDispatcher
 ) : UseCase<UseCase.None, Failure, Quotes>(mainDispatcher) {

@@ -8,5 +8,7 @@ data class QuotesEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val text: String,
-    val publishTime: String
+    val publishTime: String,
+    val username: String,
+    val userProfileImageUrl: String
 )
