@@ -1,14 +1,9 @@
 package com.web0zz.wallquotes.presentation
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.web0zz.wallquotes.R
+import com.web0zz.wallquotes.databinding.ActivityMainBinding
+import com.web0zz.wallquotes.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 }
