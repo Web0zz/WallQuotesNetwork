@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
+}
+
+android {
+    compileSdk ConfigData.compileSdkVersion
+
+    defaultConfig {
+        applicationId "com.web0zz.wallquotes"
+        minSdk ConfigData.minSdkVersion
+        targetSdk ConfigData.targetSdkVersion
+        versionCode ConfigData.versionCode
+        versionName ConfigData.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    // Android
+    implementation AndroidDependencies.coreLib
+    implementation AndroidDependencies.appcompatLib
+    implementation AndroidDependencies.coroutinesLib
+
+    // Android - UI
+    implementation AndroidDependencies.materialLib
+    implementation AndroidDependencies.constraintLib
+    implementation AndroidDependencies.navFragmentLib
+    implementation AndroidDependencies.navUiLib
+
+    // Room
+    implementation RoomDependencies.roomRuntimeLib
+    annotationProcessor RoomDependencies.roomCompilerLib
+
+    // Hilt
+    implementation HiltDependencies.hiltAndroidLib
+    kapt HiltDependencies.hiltCompilerLib
+
+    // Kotlin-Result
+    implementation KtResultDependencies.ktResultLib
+    implementation KtResultDependencies.ktResultCoroutinesLib
+}
