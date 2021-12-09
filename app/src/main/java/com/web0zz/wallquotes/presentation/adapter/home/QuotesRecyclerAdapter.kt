@@ -6,12 +6,13 @@ import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.adapter.home.viewholder.QuotesViewHolder
 
 class QuotesRecyclerAdapter(
-    private val quotesList: List<Quotes>
+    private val quotesList: List<Quotes>,
+    private val onClickQuotes: (Quotes) -> Unit
 ) : RecyclerView.Adapter<QuotesViewHolder>() {
     override fun getItemCount() = quotesList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuotesViewHolder {
-        return QuotesViewHolder.create(parent)
+        return QuotesViewHolder.create(parent, onClickQuotes)
     }
 
     override fun onBindViewHolder(holder: QuotesViewHolder, position: Int) {

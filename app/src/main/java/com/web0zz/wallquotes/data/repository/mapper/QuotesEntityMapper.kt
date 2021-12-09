@@ -6,7 +6,8 @@ import com.web0zz.wallquotes.domain.model.Quotes
 fun mapQuotesEntity(input: QuotesEntity): Quotes {
     return Quotes(
         id = input.id,
-        text = input.text,
-        publishTime = input.publishTime
+        body = input.body,
+        authorName = input.authorName,
+        tag = input.tag
     )
 }

@@ -8,6 +8,9 @@ interface QuotesDao {
     @Query("SELECT * FROM quotes_table")
     fun getAllQuotes(): List<QuotesEntity>
 
+    @Query("SELECT * FROM quotes_table WHERE tag = :selectedTag ")
+    fun getByCategory(selectedTag: String): List<QuotesEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQuotes(quotes: QuotesEntity)
 

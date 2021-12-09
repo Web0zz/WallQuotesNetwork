@@ -4,9 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.domain.usecase.DeleteQuotesUseCase
-import com.web0zz.wallquotes.domain.usecase.InsertQuotesUseCase
-import com.web0zz.wallquotes.domain.usecase.UpdateQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.DeleteQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.InsertQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

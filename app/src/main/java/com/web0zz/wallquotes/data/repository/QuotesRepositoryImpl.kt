@@ -36,6 +36,21 @@ class QuotesRepositoryImpl(
         emit(result)
     }
 
+    override suspend fun getByCategory(selectedTag: String): Flow<Result<List<Quotes>, Failure>> = flow {
+        val result: Result<List<Quotes>, Failure> =
+            try {
+                val data = quotesDao.getByCategory(selectedTag.lowercase()).map {
+                    mapQuotesEntity(it)
+                }
+
+                Ok(data)
+            } catch (e: Exception) {
+                Err(Failure.UnknownError(FAILED_READING, e.localizedMessage))
+            }
+
+        emit(result)
+    }
+
     override suspend fun insertQuotes(quotes: Quotes): Flow<Result<UseCase.None, Failure>> = flow {
         val result: Result<UseCase.None, Failure> =
             try {

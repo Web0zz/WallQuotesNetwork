@@ -3,6 +3,7 @@ object AndroidDependencies {
     const val coreLib = "androidx.core:core-ktx:${Versions.coreVersion}"
     const val appcompatLib = "androidx.appcompat:appcompat:${Versions.appcompatVersion}"
     const val coroutinesLib = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
+    const val lifecycleKtxLib = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleVersion}"
 
     // UI
     const val materialLib = "com.google.android.material:material:${Versions.materialVersion}"

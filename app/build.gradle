@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
 }
@@ -45,6 +46,7 @@ dependencies {
     implementation AndroidDependencies.coreLib
     implementation AndroidDependencies.appcompatLib
     implementation AndroidDependencies.coroutinesLib
+    implementation AndroidDependencies.lifecycleKtxLib
 
     // Android - UI
     implementation AndroidDependencies.materialLib

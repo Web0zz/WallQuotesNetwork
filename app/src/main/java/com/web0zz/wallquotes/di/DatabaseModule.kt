@@ -18,4 +18,8 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideQuotesDao(database: QuotesDatabase) = database.quotesDao()
+
+    @Singleton
+    @Provides
+    fun provideCategoryDao(database: QuotesDatabase) = database.tagDao()
 }

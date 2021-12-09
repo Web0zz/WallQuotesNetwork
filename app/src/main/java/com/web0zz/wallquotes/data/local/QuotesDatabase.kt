@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.web0zz.wallquotes.data.local.model.TagEntity
 import com.web0zz.wallquotes.data.local.model.QuotesEntity
 
-@Database(entities = [QuotesEntity::class], version = 1)
+@Database(entities = [QuotesEntity::class, TagEntity::class], version = 1)
 abstract class QuotesDatabase : RoomDatabase() {
     abstract fun quotesDao(): QuotesDao
+    abstract fun tagDao(): TagDao
 
     companion object {
         private const val DB_NAME = "quotes_db"
@@ -22,7 +24,7 @@ abstract class QuotesDatabase : RoomDatabase() {
                     context.applicationContext,
                     QuotesDatabase::class.java,
                     DB_NAME
-                ).build()
+                ).createFromAsset("database/pre_quotes.db").build()
 
                 INSTANCE = instance
                 return instance

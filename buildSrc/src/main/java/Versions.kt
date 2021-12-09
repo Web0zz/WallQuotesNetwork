@@ -3,6 +3,7 @@ object Versions {
     const val coreVersion = "1.7.0"
     const val appcompatVersion = "1.4.0"
     const val coroutinesVersion = "1.3.9"
+    const val lifecycleVersion = "2.4.0"
 
     // Android - UI
     const val materialVersion = "1.4.0"

@@ -18,9 +18,28 @@
         <action
             android:id="@+id/action_homeFragment_to_editorFragment"
             app:destination="@id/editorFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_quotesFragment"
+            app:destination="@id/quotesFragment" />
     </fragment>
     <fragment
         android:id="@+id/editorFragment"
         android:name="com.web0zz.wallquotes.presentation.screen.editor.EditorFragment"
-        android:label="EditorFragment" />
+        android:label="EditorFragment" >
+        <argument
+            android:name="edit_quotes"
+            app:argType="com.web0zz.wallquotes.domain.model.Quotes"
+            app:nullable="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/quotesFragment"
+        android:name="com.web0zz.wallquotes.presentation.screen.quotes.QuotesFragment"
+        android:label="QuotesFragment" >
+        <action
+            android:id="@+id/action_quotesFragment_to_editorFragment"
+            app:destination="@id/editorFragment" />
+        <argument
+            android:name="selected_category"
+            app:argType="string" />
+    </fragment>
 </navigation>

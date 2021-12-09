@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
     private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> B
 ) : Fragment() {
-    private var _binding: B? = null
-    protected val binding get() = _binding!!
+    private var _fragmentBinding: B? = null
+    protected val fragmentBinding get() = _fragmentBinding!!
 
     protected abstract val mViewModel: V
 
@@ -31,9 +31,9 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = inflateLayout(layoutInflater, container, false)
+        _fragmentBinding = inflateLayout(layoutInflater, container, false)
         onCreateViewInvoke()
-        return binding.root
+        return fragmentBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,6 +43,6 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        _fragmentBinding = null
     }
 }

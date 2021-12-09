@@ -1,7 +1,12 @@
 package com.web0zz.wallquotes.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Quotes(
     val id: Int,
-    val text: String,
-    val publishTime: String
-)
+    val body: String,
+    val authorName: String,
+    val tag: String
+): Parcelable
