@@ -8,10 +8,11 @@ import com.web0zz.wallquotes.domain.model.Tag
 
 class TagViewHolder(
     private val binding: ViewHomeTagItemBinding,
-    onClickCategory: (String) -> Unit
+    private val onClickTag: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(tag: Tag) {
         binding.categoryName = tag.title
+        binding.root.setOnClickListener { onClickTag(tag.title) }
     }
 
     companion object {

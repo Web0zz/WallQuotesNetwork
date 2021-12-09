@@ -8,10 +8,11 @@ import com.web0zz.wallquotes.domain.model.Quotes
 
 class QuotesViewHolder(
     private val binding: ViewHomeQuoteItemBinding,
-    onClickQuotes: (Quotes) -> Unit
+    private val onClickQuotes: (Quotes) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(quote: Quotes) {
         binding.quote = quote
+        binding.root.setOnClickListener { onClickQuotes(quote) }
     }
 
     companion object {

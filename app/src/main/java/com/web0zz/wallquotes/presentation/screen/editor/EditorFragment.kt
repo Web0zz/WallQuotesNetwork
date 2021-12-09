@@ -1,20 +1,48 @@
 package com.web0zz.wallquotes.presentation.screen.editor
 
+import android.util.Log
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
+import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentEditorBinding
 import com.web0zz.wallquotes.domain.exception.Failure
+import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     FragmentEditorBinding::inflate
 ) {
     override val mViewModel: EditorViewModel by viewModels()
+    private val safeArgs: EditorFragmentArgs by navArgs()
+
+    private var isUpdate by Delegates.notNull<Boolean>()
+    private lateinit var updateQuote: Quotes
+
+    private fun firstSetup() {
+        when(val data = safeArgs.editQuotes) {
+            null -> initWithoutQuote()
+            else -> initWithQuote(data)
+        }
+    }
+
+    private fun initWithQuote(quote: Quotes) {
+        updateQuote = quote
+        fragmentBinding.editQuoteTextView.text = quote.body
+        fragmentBinding.editWriterTextView.text = quote.authorName
+    }
+
+    private fun initWithoutQuote() {
+        fragmentBinding.editQuoteTextView.text = ""
+        fragmentBinding.editWriterTextView.text = getString(R.string.itsMe)
+    }
 
     override fun onCreateInvoke() {
         lifecycleScope.launch {
@@ -38,6 +66,31 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         }
     }
 
+    private fun onPublishQuote() {
+        when(isUpdate) {
+            true -> {
+                val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
+                val quoteData = Quotes(
+                    updateQuote.id,
+                    if (newBodyText.isBlank()) updateQuote.body else newBodyText,
+                    authorName = getString(R.string.itsMe),
+                    tag = "yours"
+                )
+
+                mViewModel.updateQuotes(quoteData)
+            }
+            false -> {
+                val quoteData = Quotes(
+                    body = fragmentBinding.editQuoteTextView.text.toString(),
+                    authorName = getString(R.string.itsMe),
+                    tag = "yours"
+                )
+
+                mViewModel.insertQuotes(quoteData)
+            }
+        }
+    }
+
     // Handle HomeUiState
 
     private fun handleLoading() {
@@ -45,18 +98,20 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     private fun handleEditorState(isDone: Boolean) {
-        // TODO set launches data to xml
+        if (isDone) Toast.makeText(context, "Quote Ready", Toast.LENGTH_SHORT).show()
+        else Toast.makeText(context, "Quote Not Ready", Toast.LENGTH_SHORT).show()
     }
 
     private fun handleFailure(failure: Failure) {
         when (failure) {
-            is Failure.UnknownError -> renderFailure()
+            is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
         }
     }
 
     // Render Data
 
-    private fun renderFailure(/*@StringRes message: Int*/) {
-        // TODO show error to user
+    private fun showFailureText(message: String, exceptionMessage: String?) {
+        Log.e("ERROR","Error on Login: $exceptionMessage")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }
