@@ -12,9 +12,13 @@ import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.adapter.quotes.QuotesSlidePagerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 import com.web0zz.wallquotes.presentation.screen.quotes.quote.QuoteFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@DelicateCoroutinesApi
+@AndroidEntryPoint
 class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
     FragmentQuotesBinding::inflate
 ) {
@@ -23,6 +27,10 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
     private lateinit var selectedCategory: String
     private lateinit var viewPager2: ViewPager2
+
+    override fun onStartInvoke() {
+        setQuotes(selectedCategory)
+    }
 
     override fun onCreateInvoke() {
         selectedCategory = safeArgs.selectedCategory

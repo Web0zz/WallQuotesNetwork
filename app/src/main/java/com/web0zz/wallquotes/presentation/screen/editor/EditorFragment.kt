@@ -13,10 +13,14 @@ import com.web0zz.wallquotes.databinding.FragmentEditorBinding
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.properties.Delegates
 
+@DelicateCoroutinesApi
+@AndroidEntryPoint
 class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     FragmentEditorBinding::inflate
 ) {
@@ -33,6 +37,23 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         }
     }
 
+    override fun onStartInvoke() {
+        firstSetup()
+        fragmentBinding.editPublishImageButton.setOnClickListener { onPublishQuote() }
+    }
+
+    override fun onCreateInvoke() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mViewModel.editorUiState.collect { handleViewState(it) }
+            }
+        }
+    }
+
+    override fun onCreateViewInvoke() {
+        onTyping()
+    }
+
     private fun initWithQuote(quote: Quotes) {
         updateQuote = quote
         fragmentBinding.editQuoteTextView.text = quote.body
@@ -44,13 +65,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         fragmentBinding.editWriterTextView.text = getString(R.string.itsMe)
     }
 
-    override fun onCreateInvoke() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.editorUiState.collect { handleViewState(it) }
-            }
-        }
-    }
 
     private fun handleViewState(viewState: EditorViewModel.EditorUiState) {
         when (viewState) {
@@ -94,7 +108,7 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     // Handle HomeUiState
 
     private fun handleLoading() {
-        // TODO set loading state
+
     }
 
     private fun handleEditorState(isDone: Boolean) {

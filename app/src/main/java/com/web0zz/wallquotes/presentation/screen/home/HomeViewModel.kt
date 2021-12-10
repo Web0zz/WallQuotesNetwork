@@ -6,10 +6,13 @@ import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Tag
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.domain.usecase.*
+import com.web0zz.wallquotes.domain.usecase.quotes.DeleteQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.tag.GetAllTagUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.GetQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -17,10 +20,13 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@DelicateCoroutinesApi
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getQuotesUseCase: GetQuotesUseCase,
-    private val getAllTagUseCase: GetAllTagUseCase
+    private val getAllTagUseCase: GetAllTagUseCase,
+    private val deleteQuotesUseCase: DeleteQuotesUseCase,
+    private val updateQuotesUseCase: UpdateQuotesUseCase
 ) : BaseViewModel() {
 
     private val _homeQuotesUiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
@@ -44,18 +50,34 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getAllCategory() {
+    fun getAllTag() {
         job?.cancel()
 
         getAllTagUseCase(UseCase.None(), viewModelScope) {
             job = viewModelScope.launch {
                 it.onStart { setLoading(false) }
                     .collect { result ->
-                        result.mapBoth(::handleCategoryList) {
+                        result.mapBoth(::handleTagList) {
                             handleFailure(it, false)
                         }
                     }
             }
+        }
+    }
+
+    fun deleteQuote(quotes: Quotes) {
+        job?.cancel()
+
+        deleteQuotesUseCase(quotes, viewModelScope) {
+            getAllQuotes()
+        }
+    }
+
+    fun likeQuote(quotes: Quotes) {
+        job?.cancel()
+
+        updateQuotesUseCase(quotes, viewModelScope) {
+            getAllQuotes()
         }
     }
 
@@ -68,8 +90,8 @@ class HomeViewModel @Inject constructor(
         _homeQuotesUiState.value = HomeUiState.Success(quotesData, null)
     }
 
-    private fun handleCategoryList(categoriesData: List<Tag>) {
-        _homeTagUiState.value = HomeUiState.Success(null, categoriesData)
+    private fun handleTagList(tagData: List<Tag>) {
+        _homeTagUiState.value = HomeUiState.Success(null, tagData)
     }
 
     private fun handleFailure(failure: Failure, isQuotes: Boolean) {

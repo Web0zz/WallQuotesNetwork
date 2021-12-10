@@ -21,6 +21,13 @@ abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
     open fun onCreateViewInvoke() {}
     open fun onViewCreatedInvoke() {}
 
+    open fun onStartInvoke() {}
+
+    override fun onStart() {
+        super.onStart()
+        onStartInvoke()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onCreateInvoke()

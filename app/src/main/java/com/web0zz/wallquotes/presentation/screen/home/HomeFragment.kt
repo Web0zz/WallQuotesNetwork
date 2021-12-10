@@ -1,11 +1,14 @@
 package com.web0zz.wallquotes.presentation.screen.home
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentHomeBinding
 import com.web0zz.wallquotes.domain.exception.Failure
@@ -15,9 +18,14 @@ import com.web0zz.wallquotes.presentation.adapter.home.TagRecyclerAdapter
 import com.web0zz.wallquotes.presentation.adapter.home.QuotesRecyclerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavController
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@DelicateCoroutinesApi
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     FragmentHomeBinding::inflate
 ) {
@@ -26,11 +34,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         getFragmentNavController(R.id.nav_host_fragmentContainerView)
     }
 
-    override fun onCreateInvoke() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.homeTagUiState.collect { handleTagViewState(it) }
-                mViewModel.homeQuotesUiState.collect { handleQuotesViewState(it) }
+    override fun onStartInvoke() {
+        loadTagList()
+        loadQuotesList()
+    }
+
+    override fun onCreateViewInvoke() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    mViewModel.homeQuotesUiState.collect { handleQuotesViewState(it) }
+                }
+
+                launch {
+                    mViewModel.homeTagUiState.collect { handleTagViewState(it) }
+                }
             }
         }
     }
@@ -56,7 +74,33 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun loadTagList() {
-        mViewModel.getAllCategory()
+        mViewModel.getAllTag()
+    }
+
+    private fun deleteQuote(quotes: Quotes) {
+        mViewModel.deleteQuote(quotes)
+    }
+
+    private fun shareQuote(body: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, body)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
+    private fun likeQuote(quotes: Quotes) {
+        val likedQuote = Quotes(
+            quotes.id,
+            quotes.body,
+            quotes.authorName,
+            "yours"
+        )
+
+        mViewModel.likeQuote(likedQuote)
     }
 
     private fun navigateToQuotes(selectedTagTitle: String) {
@@ -72,17 +116,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     // Handle HomeUiState
 
     private fun handleLoading() {
-        // TODO set loading state
+
     }
 
     private fun handleQuotesData(quotes: List<Quotes>) {
         fragmentBinding.quotesRecyclerView.apply {
-            adapter = QuotesRecyclerAdapter(quotes, ::navigateToEdit)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = QuotesRecyclerAdapter(quotes, ::navigateToEdit, ::shareQuote, ::likeQuote, ::deleteQuote)
         }
     }
 
     private fun handleTagData(tags: List<Tag>) {
         fragmentBinding.tagRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = TagRecyclerAdapter(tags, ::navigateToQuotes)
         }
     }
@@ -96,7 +142,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     // Render Data
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR","Error on Login: $exceptionMessage")
+        Log.e("ERROR","Error on Home: $exceptionMessage")
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

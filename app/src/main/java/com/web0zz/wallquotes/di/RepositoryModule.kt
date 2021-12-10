@@ -1,27 +1,32 @@
 package com.web0zz.wallquotes.di
 
-import com.web0zz.wallquotes.data.local.TagDao
-import com.web0zz.wallquotes.data.local.QuotesDao
 import com.web0zz.wallquotes.data.repository.TagRepositoryImpl
 import com.web0zz.wallquotes.data.repository.QuotesRepositoryImpl
 import com.web0zz.wallquotes.domain.repository.TagRepository
 import com.web0zz.wallquotes.domain.repository.QuotesRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface RepositoryModule {
-    @Provides
-    @Singleton
-    fun provideQuotesRepository(quotesDao: QuotesDao): QuotesRepository =
-        QuotesRepositoryImpl(quotesDao)
+    @Binds
+    @QuotesRepositoryImp
+    fun bindQuotesRepository(quotesRepositoryImpl: QuotesRepositoryImpl): QuotesRepository
 
-    @Provides
-    @Singleton
-    fun provideCategoryRepository(tagDao: TagDao): TagRepository =
-        TagRepositoryImpl(tagDao)
+    @Binds
+    @TagRepositoryImp
+    fun bindTagRepository(tagRepositoryImpl: TagRepositoryImpl): TagRepository
 }
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class QuotesRepositoryImp
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class TagRepositoryImp
+

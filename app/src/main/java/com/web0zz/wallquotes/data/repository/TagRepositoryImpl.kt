@@ -9,10 +9,13 @@ import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Tag
 import com.web0zz.wallquotes.domain.repository.TagRepository
 import com.web0zz.wallquotes.util.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class TagRepositoryImpl(
+class TagRepositoryImpl @Inject constructor(
     private val tagDao: TagDao
 ) : TagRepository {
     override suspend fun getTags(): Flow<Result<List<Tag>, Failure>> = flow {
@@ -28,5 +31,5 @@ class TagRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 }

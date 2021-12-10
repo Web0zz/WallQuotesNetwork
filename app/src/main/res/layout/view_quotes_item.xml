@@ -8,6 +8,7 @@
             name="quotes"
             type="com.web0zz.wallquotes.domain.model.Quotes" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,6 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{quotes.body}"
+            android:gravity="center"
+            android:paddingHorizontal="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +27,7 @@
             tools:text="&quot;Design isn't finished until somebody is using it&quot;" />
 
         <TextView
-            android:id="@+id/writer_textView"
+            android:id="@+id/author_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{quotes.authorName}"
@@ -34,19 +37,21 @@
             tools:text="Jeff Lindsay" />
 
         <ImageButton
-            android:id="@+id/like_imageButton"
+            android:id="@+id/quotes_like_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/writer_textView" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/quotes_share_imageButton" />
 
         <ImageButton
-            android:id="@+id/extra_imageButton"
+            android:id="@+id/quotes_share_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/like_imageButton"
-            app:layout_constraintStart_toStartOf="@+id/like_imageButton"
-            app:layout_constraintTop_toBottomOf="@+id/like_imageButton" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/quotes_like_imageButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

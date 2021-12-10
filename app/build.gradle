@@ -56,7 +56,7 @@ dependencies {
 
     // Room
     implementation RoomDependencies.roomRuntimeLib
-    annotationProcessor RoomDependencies.roomCompilerLib
+    kapt RoomDependencies.roomCompilerLib
 
     // Hilt
     implementation HiltDependencies.hiltAndroidLib

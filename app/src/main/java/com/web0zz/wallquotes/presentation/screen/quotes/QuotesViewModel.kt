@@ -8,14 +8,17 @@ import com.web0zz.wallquotes.domain.usecase.quotes.GetByCategoryUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import com.web0zz.wallquotes.presentation.screen.home.HomeViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@DelicateCoroutinesApi
 @HiltViewModel
-class QuotesViewModel(
+class QuotesViewModel @Inject constructor(
     private val getByCategoryUseCase: GetByCategoryUseCase
 ) : BaseViewModel() {
 

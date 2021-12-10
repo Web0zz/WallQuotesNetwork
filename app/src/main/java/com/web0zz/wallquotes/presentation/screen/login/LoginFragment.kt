@@ -33,6 +33,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         }
     }
 
+    override fun onCreateViewInvoke() {
+        loginToHome()
+    }
+
     private fun handleViewState(viewState: LoginViewModel.LoginUiState) {
         when (viewState) {
             is LoginViewModel.LoginUiState.Loading -> handleLoading()
@@ -48,7 +52,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
 
             if(username.isNotBlank() && password.isNotBlank()) {
                 authUser(username, password)
-            }
+            } else Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -59,7 +63,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
     // Handle HomeUiState
 
     private fun handleLoading() {
-        // TODO set loading state
+
     }
 
     private fun handleLogin(isAuth: Boolean) {

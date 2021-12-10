@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-@HiltViewModel
 class LoginViewModel : BaseViewModel() {
 
     private var _loginUiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.Loading)

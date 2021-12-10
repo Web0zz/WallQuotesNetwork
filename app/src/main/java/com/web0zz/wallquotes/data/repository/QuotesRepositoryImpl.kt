@@ -14,11 +14,14 @@ import com.web0zz.wallquotes.util.Constants.FAILED_DELETE
 import com.web0zz.wallquotes.util.Constants.FAILED_INSERT
 import com.web0zz.wallquotes.util.Constants.FAILED_READING
 import com.web0zz.wallquotes.util.Constants.FAILED_UPDATE
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.lang.Exception
+import javax.inject.Inject
 
-class QuotesRepositoryImpl(
+class QuotesRepositoryImpl @Inject constructor(
     private val quotesDao: QuotesDao
 ) : QuotesRepository {
     override suspend fun getQuotes(): Flow<Result<List<Quotes>, Failure>> = flow {
@@ -34,7 +37,7 @@ class QuotesRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun getByCategory(selectedTag: String): Flow<Result<List<Quotes>, Failure>> = flow {
         val result: Result<List<Quotes>, Failure> =
@@ -49,7 +52,7 @@ class QuotesRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun insertQuotes(quotes: Quotes): Flow<Result<UseCase.None, Failure>> = flow {
         val result: Result<UseCase.None, Failure> =
@@ -63,7 +66,7 @@ class QuotesRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun updateQuotes(quotes: Quotes): Flow<Result<UseCase.None, Failure>> = flow {
         val result: Result<UseCase.None, Failure> =
@@ -77,7 +80,7 @@ class QuotesRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun deleteQuotes(quotes: Quotes): Flow<Result<UseCase.None, Failure>> = flow {
         val result: Result<UseCase.None, Failure> =
@@ -91,5 +94,5 @@ class QuotesRepositoryImpl(
             }
 
         emit(result)
-    }
+    }.flowOn(Dispatchers.IO)
 }

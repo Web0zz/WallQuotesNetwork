@@ -10,6 +10,7 @@ import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@DelicateCoroutinesApi
 @HiltViewModel
 class EditorViewModel @Inject constructor(
     private val insertQuotesUseCase: InsertQuotesUseCase,

@@ -8,18 +8,17 @@ import kotlinx.coroutines.flow.Flow
 //
 // https://github.com/android10/Android-CleanArchitecture-Kotlin
 // https://adambennett.dev/2020/05/the-result-monad/
-abstract class UseCase<out Type, out Failure, in Params>(
-    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
-) where Type : Any {
+abstract class UseCase<out Type, out Failure, in Params> where Type : Any {
 
     abstract suspend fun run(params: Params): Flow<Result<Type, Failure>>
 
+    @DelicateCoroutinesApi
     operator fun invoke(
         params: Params,
-        scope: CoroutineScope,
+        scope: CoroutineScope = GlobalScope,
         onResult: (Flow<Result<Type, Failure>>) -> Unit = {}
     ) {
-        scope.launch(mainDispatcher) {
+        scope.launch(Dispatchers.Main) {
             val deferred = async(Dispatchers.IO) {
                 run(params)
             }
