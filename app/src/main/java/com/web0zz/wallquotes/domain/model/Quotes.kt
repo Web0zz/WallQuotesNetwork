@@ -8,5 +8,6 @@ data class Quotes(
     val id: Int = 0,
     val body: String,
     val authorName: String,
-    val tag: String
+    val tag: String,
+    var isLiked: Boolean = false
 ): Parcelable

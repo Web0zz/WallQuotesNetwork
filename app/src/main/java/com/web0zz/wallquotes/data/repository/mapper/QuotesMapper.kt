@@ -8,6 +8,7 @@ fun mapQuotesToEntity(input: Quotes): QuotesEntity {
         id = input.id,
         body = input.body,
         authorName = input.authorName,
-        tag = input.tag
+        tag = input.tag,
+        isLiked = input.isLiked
     )
 }

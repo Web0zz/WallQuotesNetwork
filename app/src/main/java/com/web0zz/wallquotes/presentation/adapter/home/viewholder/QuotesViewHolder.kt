@@ -42,8 +42,21 @@ class QuotesViewHolder(
 
             binding.commonButtonsGroup.visibility = if (isClicked) View.VISIBLE else View.GONE
 
+            if (quote.isLiked) {
+                binding.itemLikeImageButton.setImageResource(R.drawable.ic_selected_like)
+            } else binding.itemLikeImageButton.setImageResource(R.drawable.ic_unselected_like)
+
             binding.itemShareImageButton.setOnClickListener { onClickShare(quote.body) }
-            binding.itemLikeImageButton.setOnClickListener { onClickLike(quote) }
+            binding.itemLikeImageButton.setOnClickListener {
+                onClickLike(quote)
+                if (quote.isLiked) {
+                    quote.isLiked = true
+                    binding.itemLikeImageButton.setImageResource(R.drawable.ic_selected_like)
+                } else {
+                    quote.isLiked = false
+                    binding.itemLikeImageButton.setImageResource(R.drawable.ic_unselected_like)
+                }
+            }
 
             if (quote.tag == "your") {
                 binding.personalButtonsGroup.visibility = if (isClicked) View.VISIBLE else View.GONE

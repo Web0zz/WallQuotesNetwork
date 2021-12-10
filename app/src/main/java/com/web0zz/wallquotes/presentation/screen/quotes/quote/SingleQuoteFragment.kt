@@ -2,6 +2,7 @@ package com.web0zz.wallquotes.presentation.screen.quotes.quote
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.ViewQuotesItemBinding
@@ -26,12 +27,11 @@ class SingleQuoteFragment : BaseFragment<ViewQuotesItemBinding, SingleQuoteViewM
 
     override fun onCreateViewInvoke() {
         fragmentBinding.quotes = selectedQuotes
+        setLikeImage()
 
         fragmentBinding.quotesLikeImageButton.setOnClickListener {
             likeQuote(selectedQuotes)
-            if (selectedQuotes.tag == "yours") {
-                fragmentBinding.quotesLikeImageButton.setImageResource(R.drawable.ic_selected_like)
-            } else fragmentBinding.quotesLikeImageButton.setImageResource(R.drawable.ic_unselected_like)
+            setLikeImage()
         }
 
         fragmentBinding.quotesShareImageButton.setOnClickListener {
@@ -50,25 +50,39 @@ class SingleQuoteFragment : BaseFragment<ViewQuotesItemBinding, SingleQuoteViewM
         startActivity(shareIntent)
     }
 
+    private fun setLikeImage() {
+        if (selectedQuotes.isLiked) {
+            fragmentBinding.quotesLikeImageButton.setImageResource(R.drawable.ic_selected_like)
+        } else fragmentBinding.quotesLikeImageButton.setImageResource(R.drawable.ic_unselected_like)
+    }
+
     private fun likeQuote(quotes: Quotes) {
-        if (quotes.tag != "yours") {
+        if (quotes.isLiked) {
+            quotes.isLiked = false
+
             val likedQuote = Quotes(
                 quotes.id,
                 quotes.body,
                 quotes.authorName,
-                "yours"
+                quotes.tag,
+                false
             )
 
+            Toast.makeText(context, "Quote UnLiked", Toast.LENGTH_SHORT).show()
             mViewModel.updateQuote(likedQuote)
-        } else {
-            val likedQuote = Quotes(
+        } else if (!quotes.isLiked) {
+            quotes.isLiked = true
+
+            val unlikedQuote = Quotes(
                 quotes.id,
                 quotes.body,
                 quotes.authorName,
-                "live" // TODO temp solution
+                quotes.tag,
+                true
             )
 
-            mViewModel.updateQuote(likedQuote)
+            Toast.makeText(context, "Quote Liked", Toast.LENGTH_SHORT).show()
+            mViewModel.updateQuote(unlikedQuote)
         }
     }
 

@@ -9,5 +9,6 @@ data class QuotesEntity(
     val id: Int = 0,
     val body: String,
     val authorName: String,
-    val tag: String
+    val tag: String,
+    val isLiked: Boolean = false
 )

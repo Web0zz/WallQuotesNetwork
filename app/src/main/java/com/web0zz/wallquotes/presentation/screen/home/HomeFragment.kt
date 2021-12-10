@@ -91,24 +91,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun likeQuote(quotes: Quotes) {
-        if (quotes.tag != "yours") {
+        if (quotes.isLiked) {
             val likedQuote = Quotes(
                 quotes.id,
                 quotes.body,
                 quotes.authorName,
-                "yours"
+                quotes.tag,
+                false
             )
 
+            Toast.makeText(context, "Quote UnLiked", Toast.LENGTH_SHORT).show()
             mViewModel.updateLikeQuote(likedQuote)
-        } else {
-            val likedQuote = Quotes(
+        } else if (!quotes.isLiked) {
+            val unlikedQuote = Quotes(
                 quotes.id,
                 quotes.body,
                 quotes.authorName,
-                "live" // TODO temp solution
+                quotes.tag,
+                true
             )
 
-            mViewModel.updateLikeQuote(likedQuote)
+            Toast.makeText(context, "Quote Liked", Toast.LENGTH_SHORT).show()
+            mViewModel.updateLikeQuote(unlikedQuote)
         }
     }
 

@@ -13,4 +13,8 @@
     <string name="share_quote">Share Quote</string>
     <string name="edit_quote">Edit Quote</string>
     <string name="double_quote_background">double quote background</string>
+    <string name="tags">Tags</string>
+    <string name="quotes">Quotes</string>
+
+    <string name="login_state_key">LOGIN</string>
 </resources>

@@ -12,9 +12,7 @@ import com.web0zz.wallquotes.domain.usecase.quotes.GetQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -79,7 +77,9 @@ class HomeViewModel @Inject constructor(
         job?.cancel()
 
         updateQuotesUseCase(quotes, viewModelScope) {
-            getAllQuotes()
+            job = viewModelScope.launch {
+                it.collect { getAllQuotes() }
+            }
         }
     }
 
