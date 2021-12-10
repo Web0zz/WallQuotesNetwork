@@ -1,9 +1,9 @@
 package com.web0zz.wallquotes.presentation.screen.home
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -39,6 +39,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         loadQuotesList()
     }
 
+    override fun onCreateInvoke() {
+        setHasOptionsMenu(true)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.setGroupVisible(R.id.home_menu_group, true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.add_quote -> {
+                navigateToEdit(null)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreateViewInvoke() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -51,10 +70,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 }
             }
         }
-    }
-
-    override fun onViewCreatedInvoke() {
-        setHasOptionsMenu(true)
     }
 
     private fun handleQuotesViewState(viewState: HomeViewModel.HomeUiState) {
@@ -139,14 +154,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun handleQuotesData(quotes: List<Quotes>) {
-        fragmentBinding.quotesRecyclerView.apply {
+        with(fragmentBinding.quotesRecyclerView) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = QuotesRecyclerAdapter(quotes, ::navigateToEdit, ::shareQuote, ::likeQuote, ::deleteQuote)
         }
     }
 
     private fun handleTagData(tags: List<Tag>) {
-        fragmentBinding.tagRecyclerView.apply {
+        with(fragmentBinding.tagRecyclerView) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = TagRecyclerAdapter(tags, ::navigateToQuotes)
         }

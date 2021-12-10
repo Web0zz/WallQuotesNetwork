@@ -1,5 +1,6 @@
 package com.web0zz.wallquotes.presentation
 
+import android.view.Menu
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
@@ -25,8 +26,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
 
+        setSupportActionBar(activityDataBinding.mainToolbar)
+
         val appBarConfiguration = AppBarConfiguration(topLevelDestinationIds = setOf(R.id.loginFragment, R.id.homeFragment))
 
         activityDataBinding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }

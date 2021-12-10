@@ -6,22 +6,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editor_constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/quote_background">
 
         <TextView
             android:id="@+id/edit_quote_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:fontFamily="@font/playfairdisplay_semibold"
+            android:gravity="center"
+            android:paddingHorizontal="30dp"
+            android:textColor="@color/dark_quote_text"
+            android:textSize="26sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="&quot;Design isn't finished until somebody is using it&quot;" />
+            tools:text="Design isn't finished until somebody is using it" />
 
         <TextView
             android:id="@+id/edit_writer_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gordita_medium"
+            android:textColor="@color/dark_quote_text"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="@+id/edit_quote_textView"
             app:layout_constraintStart_toStartOf="@+id/edit_quote_textView"
             app:layout_constraintTop_toBottomOf="@+id/edit_quote_textView"
@@ -29,9 +40,13 @@
 
         <ImageButton
             android:id="@+id/edit_publish_imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:elevation="10dp"
+            android:background="@drawable/pager_quote_button_background"
+            android:src="@drawable/ic_publish"
             android:layout_marginBottom="15dp"
+            android:contentDescription="@string/publish_quote"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_TextField"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -39,9 +54,13 @@
 
         <ImageButton
             android:id="@+id/edit_share_imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:elevation="10dp"
+            android:background="@drawable/pager_quote_button_background"
+            android:src="@drawable/ic_share"
             android:layout_marginBottom="15dp"
+            android:contentDescription="@string/share_quote"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_TextField"
             app:layout_constraintEnd_toStartOf="@+id/edit_publish_imageButton"
             app:layout_constraintHorizontal_bias="0.5"
@@ -59,7 +78,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_textInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

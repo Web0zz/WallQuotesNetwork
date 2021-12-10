@@ -14,6 +14,7 @@ import com.web0zz.wallquotes.databinding.FragmentEditorBinding
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
+import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -27,16 +28,20 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
 ) {
     override val mViewModel: EditorViewModel by viewModels()
     private val safeArgs: EditorFragmentArgs by navArgs()
-
-    private var isUpdate by Delegates.notNull<Boolean>()
-    private lateinit var updateQuote: Quotes
-
-    private fun firstSetup() {
-        val data = safeArgs.editQuotes
-        if(data != null) initWithQuote(data) else initWithoutQuote()
+    private val navController by lazy {
+        getFragmentNavController(R.id.nav_host_fragmentContainerView)
     }
 
+    private var isUpdate = false
+    private lateinit var updateQuote: Quotes
+
     override fun onCreateInvoke() {
+        val data = safeArgs.editQuotes
+        if (data != null) {
+            isUpdate = true
+            updateQuote = data
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mViewModel.editorUiState.collect { handleViewState(it) }
@@ -45,18 +50,17 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     override fun onCreateViewInvoke() {
-        firstSetup()
+        if (isUpdate) initWithQuote() else initWithoutQuote()
+
         onTyping()
 
         fragmentBinding.editPublishImageButton.setOnClickListener { onPublishQuote() }
         fragmentBinding.editShareImageButton.setOnClickListener { onShareQuote() }
     }
 
-    private fun initWithQuote(quote: Quotes) {
-        isUpdate = true
-        updateQuote = quote
-        fragmentBinding.editQuoteTextView.text = quote.body
-        fragmentBinding.editWriterTextView.text = quote.authorName
+    private fun initWithQuote() {
+        fragmentBinding.editQuoteTextView.text = updateQuote.body
+        fragmentBinding.editWriterTextView.text = updateQuote.authorName
     }
 
     private fun initWithoutQuote() {
@@ -93,35 +97,27 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     private fun onPublishQuote() {
         when(isUpdate) {
             true -> {
-                if (updateQuote.tag == "your") {
-                    val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
-                    val quoteData = Quotes(
-                        updateQuote.id,
-                        if (newBodyText.isBlank()) updateQuote.body else newBodyText,
-                        authorName = getString(R.string.itsMe),
-                        tag = "your"
-                    )
+                val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
+                val quoteData = Quotes(
+                    updateQuote.id,
+                    if (newBodyText.isBlank()) updateQuote.body else newBodyText,
+                    authorName = getString(R.string.itsMe),
+                    tag = "your",
+                    isLiked = updateQuote.isLiked
+                )
 
-                    mViewModel.updateQuotes(quoteData)
-                } else {
-                    val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
-                    val quoteData = Quotes(
-                        updateQuote.id,
-                        if (newBodyText.isBlank()) updateQuote.body else newBodyText,
-                        authorName = getString(R.string.itsMe),
-                        tag = "your"
-                    )
-
-                    mViewModel.updateQuotes(quoteData)
-                }
+                Toast.makeText(context, "Quote data updated", Toast.LENGTH_SHORT).show()
+                mViewModel.updateQuotes(quoteData)
             }
             false -> {
                 val quoteData = Quotes(
                     body = fragmentBinding.editQuoteTextView.text.toString(),
                     authorName = getString(R.string.itsMe),
-                    tag = "your"
+                    tag = "your",
+                    isLiked = true
                 )
 
+                Toast.makeText(context, "New Quote data inserted", Toast.LENGTH_SHORT).show()
                 mViewModel.insertQuotes(quoteData)
             }
         }

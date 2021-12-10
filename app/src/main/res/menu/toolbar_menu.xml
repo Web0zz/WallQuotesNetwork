@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <group android:id="@+id/home_menu_group"
+        android:visible="false">
+        <item
+            android:id="@+id/add_quote"
+            android:title="@string/add_quote"
+            android:icon="@drawable/ic_add"
+            app:showAsAction="always"/>
+    </group>
 </menu>
