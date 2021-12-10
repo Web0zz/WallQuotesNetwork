@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WallQuotes</string>
-    <string name="login">Login</string>
+    <string name="login">LOGIN</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="forget_password">Forget Password?</string>
@@ -8,4 +8,9 @@
     <string name="don_t_have_an_account_register_here">Don\'t have an account? Register Here</string>
     <string name="edit">Edit</string>
     <string name="itsMe">It\'s me</string>
+    <string name="delete_quote">Delete quote</string>
+    <string name="like_quote">Like Quote</string>
+    <string name="share_quote">Share Quote</string>
+    <string name="edit_quote">Edit Quote</string>
+    <string name="double_quote_background">double quote background</string>
 </resources>

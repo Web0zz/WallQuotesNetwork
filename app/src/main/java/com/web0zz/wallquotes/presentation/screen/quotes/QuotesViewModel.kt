@@ -4,9 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.domain.usecase.quotes.GetByCategoryUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.GetByTagUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
-import com.web0zz.wallquotes.presentation.screen.home.HomeViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,16 +18,16 @@ import javax.inject.Inject
 @DelicateCoroutinesApi
 @HiltViewModel
 class QuotesViewModel @Inject constructor(
-    private val getByCategoryUseCase: GetByCategoryUseCase
+    private val getByTagUseCase: GetByTagUseCase
 ) : BaseViewModel() {
 
     private var _quotesUiState: MutableStateFlow<QuotesUiState> = MutableStateFlow(QuotesUiState.Loading)
     val quotesUiState: StateFlow<QuotesUiState> = _quotesUiState
 
-    fun getByCategory(selectedCategory: String) {
+    fun getByTag(selectedTag: String) {
         job?.cancel()
 
-        getByCategoryUseCase(selectedCategory, viewModelScope) {
+        getByTagUseCase(selectedTag, viewModelScope) {
             job = viewModelScope.launch {
                 it.onStart { setLoading() }
                     .collect { result ->

@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,6 @@ import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavContro
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @DelicateCoroutinesApi
@@ -93,14 +91,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun likeQuote(quotes: Quotes) {
-        val likedQuote = Quotes(
-            quotes.id,
-            quotes.body,
-            quotes.authorName,
-            "yours"
-        )
+        if (quotes.tag != "yours") {
+            val likedQuote = Quotes(
+                quotes.id,
+                quotes.body,
+                quotes.authorName,
+                "yours"
+            )
 
-        mViewModel.likeQuote(likedQuote)
+            mViewModel.updateLikeQuote(likedQuote)
+        } else {
+            val likedQuote = Quotes(
+                quotes.id,
+                quotes.body,
+                quotes.authorName,
+                "live" // TODO temp solution
+            )
+
+            mViewModel.updateLikeQuote(likedQuote)
+        }
     }
 
     private fun navigateToQuotes(selectedTagTitle: String) {
@@ -138,8 +147,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
         }
     }
-
-    // Render Data
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
         Log.e("ERROR","Error on Home: $exceptionMessage")

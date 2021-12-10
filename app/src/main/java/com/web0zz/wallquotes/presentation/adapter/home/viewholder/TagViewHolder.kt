@@ -11,7 +11,7 @@ class TagViewHolder(
     private val onClickTag: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(tag: Tag) {
-        binding.categoryName = tag.title
+        binding.tagName = tag.title
         binding.root.setOnClickListener { onClickTag(tag.title) }
     }
 

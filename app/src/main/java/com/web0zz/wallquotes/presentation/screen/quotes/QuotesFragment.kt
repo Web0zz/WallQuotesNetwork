@@ -1,5 +1,7 @@
 package com.web0zz.wallquotes.presentation.screen.quotes
 
+import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +13,7 @@ import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.adapter.quotes.QuotesSlidePagerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
-import com.web0zz.wallquotes.presentation.screen.quotes.quote.QuoteFragment
+import com.web0zz.wallquotes.presentation.screen.quotes.quote.SingleQuoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -51,19 +53,19 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
     }
 
     private fun setQuotes(selectedCategory: String) {
-        mViewModel.getByCategory(selectedCategory)
+        mViewModel.getByTag(selectedCategory)
     }
 
     // Handle HomeUiState
 
     private fun handleLoading() {
-        // TODO set loading state
+
     }
 
     private fun handleQuotes(quotes: List<Quotes>) {
         val pagerAdapter =
             QuotesSlidePagerAdapter(this, quotes.size)
-            { QuoteFragment.newInstance(quotes[it])}
+            { SingleQuoteFragment.newInstance(quotes[it])}
 
         viewPager2 = fragmentBinding.quotesViewPager2
 
@@ -72,13 +74,12 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
     private fun handleFailure(failure: Failure) {
         when (failure) {
-            is Failure.UnknownError -> renderFailure()
+            is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
         }
     }
 
-    // Render Data
-
-    private fun renderFailure(/*@StringRes message: Int*/) {
-        // TODO show error to user
+    private fun showFailureText(message: String, exceptionMessage: String?) {
+        Log.e("ERROR","Error on Home: $exceptionMessage")
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

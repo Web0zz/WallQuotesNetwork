@@ -1,21 +1,11 @@
 package com.web0zz.wallquotes.presentation.screen.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentLoginBinding
-import com.web0zz.wallquotes.domain.exception.Failure
-import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
-import com.web0zz.wallquotes.presentation.screen.home.HomeViewModel
 import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavController
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
     FragmentLoginBinding::inflate
@@ -25,24 +15,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         getFragmentNavController(R.id.nav_host_fragmentContainerView)
     }
 
-    override fun onCreateInvoke() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mViewModel.loginUiState.collect { handleViewState(it) }
-            }
-        }
-    }
-
     override fun onCreateViewInvoke() {
-        loginToHome()
-    }
+        Toast.makeText(context, "This is demo just put any input to fields", Toast.LENGTH_LONG).show()
 
-    private fun handleViewState(viewState: LoginViewModel.LoginUiState) {
-        when (viewState) {
-            is LoginViewModel.LoginUiState.Loading -> handleLoading()
-            is LoginViewModel.LoginUiState.Success -> handleLogin(viewState.isAuth)
-            is LoginViewModel.LoginUiState.Error -> handleFailure(viewState.failure)
-        }
+        loginToHome()
     }
 
     private fun loginToHome() {
@@ -57,30 +33,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
     }
 
     private fun authUser(username: String, password: String) {
-        mViewModel.authUser(username, password)
-    }
-
-    // Handle HomeUiState
-
-    private fun handleLoading() {
-
-    }
-
-    private fun handleLogin(isAuth: Boolean) {
-        if (isAuth) {
-            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-            navController?.navigate(action)
-        }
-    }
-
-    private fun handleFailure(failure: Failure) {
-        when (failure) {
-            is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
-        }
-    }
-
-    private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR","Error on Login: $exceptionMessage")
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+        navController?.navigate(action)
     }
 }

@@ -1,5 +1,6 @@
 package com.web0zz.wallquotes.presentation.screen.editor
 
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -31,15 +32,8 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     private lateinit var updateQuote: Quotes
 
     private fun firstSetup() {
-        when(val data = safeArgs.editQuotes) {
-            null -> initWithoutQuote()
-            else -> initWithQuote(data)
-        }
-    }
-
-    override fun onStartInvoke() {
-        firstSetup()
-        fragmentBinding.editPublishImageButton.setOnClickListener { onPublishQuote() }
+        val data = safeArgs.editQuotes
+        if(data != null) initWithQuote(data) else initWithoutQuote()
     }
 
     override fun onCreateInvoke() {
@@ -51,10 +45,15 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     override fun onCreateViewInvoke() {
+        firstSetup()
         onTyping()
+
+        fragmentBinding.editPublishImageButton.setOnClickListener { onPublishQuote() }
+        fragmentBinding.editShareImageButton.setOnClickListener { onShareQuote() }
     }
 
     private fun initWithQuote(quote: Quotes) {
+        isUpdate = true
         updateQuote = quote
         fragmentBinding.editQuoteTextView.text = quote.body
         fragmentBinding.editWriterTextView.text = quote.authorName
@@ -80,24 +79,47 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         }
     }
 
+    private fun onShareQuote() {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, fragmentBinding.editQuoteTextView.text.toString())
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+    }
+
     private fun onPublishQuote() {
         when(isUpdate) {
             true -> {
-                val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
-                val quoteData = Quotes(
-                    updateQuote.id,
-                    if (newBodyText.isBlank()) updateQuote.body else newBodyText,
-                    authorName = getString(R.string.itsMe),
-                    tag = "yours"
-                )
+                if (updateQuote.tag == "your") {
+                    val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
+                    val quoteData = Quotes(
+                        updateQuote.id,
+                        if (newBodyText.isBlank()) updateQuote.body else newBodyText,
+                        authorName = getString(R.string.itsMe),
+                        tag = "your"
+                    )
 
-                mViewModel.updateQuotes(quoteData)
+                    mViewModel.updateQuotes(quoteData)
+                } else {
+                    val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
+                    val quoteData = Quotes(
+                        updateQuote.id,
+                        if (newBodyText.isBlank()) updateQuote.body else newBodyText,
+                        authorName = getString(R.string.itsMe),
+                        tag = "your"
+                    )
+
+                    mViewModel.updateQuotes(quoteData)
+                }
             }
             false -> {
                 val quoteData = Quotes(
                     body = fragmentBinding.editQuoteTextView.text.toString(),
                     authorName = getString(R.string.itsMe),
-                    tag = "yours"
+                    tag = "your"
                 )
 
                 mViewModel.insertQuotes(quoteData)
@@ -121,8 +143,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
             is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
         }
     }
-
-    // Render Data
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
         Log.e("ERROR","Error on Login: $exceptionMessage")

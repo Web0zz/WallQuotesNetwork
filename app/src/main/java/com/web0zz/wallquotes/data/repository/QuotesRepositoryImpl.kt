@@ -39,10 +39,10 @@ class QuotesRepositoryImpl @Inject constructor(
         emit(result)
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getByCategory(selectedTag: String): Flow<Result<List<Quotes>, Failure>> = flow {
+    override suspend fun getByTag(selectedTag: String): Flow<Result<List<Quotes>, Failure>> = flow {
         val result: Result<List<Quotes>, Failure> =
             try {
-                val data = quotesDao.getByCategory(selectedTag.lowercase()).map {
+                val data = quotesDao.getByTag(selectedTag.lowercase()).map {
                     mapQuotesEntity(it)
                 }
 

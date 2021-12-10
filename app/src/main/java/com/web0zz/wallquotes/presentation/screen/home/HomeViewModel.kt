@@ -12,11 +12,10 @@ import com.web0zz.wallquotes.domain.usecase.quotes.GetQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,6 +33,7 @@ class HomeViewModel @Inject constructor(
 
     private val _homeTagUiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
     val homeTagUiState: StateFlow<HomeUiState> = _homeTagUiState
+
 
     fun getAllQuotes() {
         job?.cancel()
@@ -69,11 +69,13 @@ class HomeViewModel @Inject constructor(
         job?.cancel()
 
         deleteQuotesUseCase(quotes, viewModelScope) {
-            getAllQuotes()
+            job = viewModelScope.launch {
+                it.collect { getAllQuotes() }
+            }
         }
     }
 
-    fun likeQuote(quotes: Quotes) {
+    fun updateLikeQuote(quotes: Quotes) {
         job?.cancel()
 
         updateQuotesUseCase(quotes, viewModelScope) {

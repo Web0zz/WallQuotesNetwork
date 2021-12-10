@@ -5,7 +5,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_background">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tag_recyclerView"
@@ -13,7 +14,10 @@
             android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/view_home_tag_item"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:orientation="horizontal"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quotes_recyclerView"
@@ -22,7 +26,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tag_recyclerView" />
+            app:layout_constraintTop_toBottomOf="@+id/tag_recyclerView"
+            tools:listitem="@layout/view_home_quote_item"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:orientation="vertical"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
