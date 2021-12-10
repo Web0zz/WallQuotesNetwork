@@ -1,7 +1,9 @@
 package com.web0zz.wallquotes.presentation.screen.home
 
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -49,6 +51,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                 }
             }
         }
+    }
+
+    override fun onViewCreatedInvoke() {
+        setHasOptionsMenu(true)
     }
 
     private fun handleQuotesViewState(viewState: HomeViewModel.HomeUiState) {
