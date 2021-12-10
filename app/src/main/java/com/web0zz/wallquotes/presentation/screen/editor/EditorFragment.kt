@@ -28,9 +28,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
 ) {
     override val mViewModel: EditorViewModel by viewModels()
     private val safeArgs: EditorFragmentArgs by navArgs()
-    private val navController by lazy {
-        getFragmentNavController(R.id.nav_host_fragmentContainerView)
-    }
 
     private var isUpdate = false
     private lateinit var updateQuote: Quotes
@@ -60,12 +57,12 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
 
     private fun initWithQuote() {
         fragmentBinding.editQuoteTextView.text = updateQuote.body
-        fragmentBinding.editWriterTextView.text = updateQuote.authorName
+        fragmentBinding.editAuthorTextView.text = updateQuote.authorName
     }
 
     private fun initWithoutQuote() {
         fragmentBinding.editQuoteTextView.text = ""
-        fragmentBinding.editWriterTextView.text = getString(R.string.itsMe)
+        fragmentBinding.editAuthorTextView.text = getString(R.string.itsMe)
     }
 
 
@@ -123,10 +120,8 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         }
     }
 
-    // Handle HomeUiState
-
     private fun handleLoading() {
-
+        // TODO will set loading view later
     }
 
     private fun handleEditorState(isDone: Boolean) {

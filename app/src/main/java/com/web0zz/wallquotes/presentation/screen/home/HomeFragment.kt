@@ -147,10 +147,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         navController?.navigate(action)
     }
 
-    // Handle HomeUiState
-
     private fun handleLoading() {
-
+        // TODO will set loading view later
     }
 
     private fun handleQuotesData(quotes: List<Quotes>) {

@@ -5,10 +5,10 @@ import com.web0zz.wallquotes.data.local.model.QuotesEntity
 
 @Dao
 interface QuotesDao {
-    @Query("SELECT * FROM quotes_table")
+    @Query("SELECT * FROM quotes_table ORDER BY id DESC")
     fun getAllQuotes(): List<QuotesEntity>
 
-    @Query("SELECT * FROM quotes_table WHERE tag = :selectedTag ")
+    @Query("SELECT * FROM quotes_table WHERE tag = :selectedTag")
     fun getByTag(selectedTag: String): List<QuotesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

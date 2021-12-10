@@ -56,10 +56,8 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
         mViewModel.getByTag(selectedCategory)
     }
 
-    // Handle HomeUiState
-
     private fun handleLoading() {
-
+        // TODO will set loading view later
     }
 
     private fun handleQuotes(quotes: List<Quotes>) {

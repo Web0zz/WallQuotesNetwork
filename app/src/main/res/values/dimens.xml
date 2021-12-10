@@ -1,5 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Common dimens -->
+    <dimen name="constraint_zero_dimen">0dp</dimen>
+    <dimen name="default_elevation">10dp</dimen>
+    <dimen name="default_cardview_radius">10dp</dimen>
+
+    <!-- Common quote -->
     <dimen name="selected_quote_padding">15dp</dimen>
     <dimen name="unselected_quote_padding">0dp</dimen>
+    <dimen name="default_quote_button_size">60dp</dimen>
+
+    <!-- Login Screen -->
+    <dimen name="login_head_margin_top">180dp</dimen>
+    <dimen name="login_username_input_margin_horizontal">50dp</dimen>
+    <dimen name="login_username_input_margin_top">30dp</dimen>
+    <dimen name="login_username_input_margin_bottom">10dp</dimen>
+    <dimen name="login_password_input_margin_horizontal">50dp</dimen>
+    <dimen name="login_password_input_margin_vertical">10dp</dimen>
+    <dimen name="forget_password_text_margin_top">10dp</dimen>
+    <dimen name="login_button_margin_top">25dp</dimen>
+    <dimen name="login_button_margin_horizontal">25dp</dimen>
+    <dimen name="register_text_margin_bottom">12dp</dimen>
+
+    <!-- Text Size-->
+    <dimen name="login_head_text_size">20sp</dimen>
+
+    <!-- Home Screen -->
+    <dimen name="tags_header_padding_horizontal">25dp</dimen>
+    <dimen name="tags_header_padding_vertical">10dp</dimen>
+    <dimen name="tag_recyclerview_margin_horizontal">4dp</dimen>
+    <dimen name="quotes_header_padding_horizontal">25dp</dimen>
+    <dimen name="quotes_header_padding_vertical">10dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="home_header_text_size">18sp</dimen>
+
+    <!-- Edit Screen -->
+    <dimen name="edit_quote_text_padding_horizontal">30dp</dimen>
+    <dimen name="edit_author_text_margin_top">20dp</dimen>
+    <dimen name="edit_buttons_margin_bottom">15dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="edit_quote_text_size">26sp</dimen>
+    <dimen name="edit_quote_author_text_size">15sp</dimen>
+
+    <!-- Home Quote item-->
+    <dimen name="constraint_padding_horizontal">10dp</dimen>
+    <dimen name="constraint_margin_horizontal">4dp</dimen>
+    <dimen name="constraint_margin_vertical">6dp</dimen>
+    <dimen name="default_item_button_padding">10dp</dimen>
+    <dimen name="update_button_margin_horizontal">10dp</dimen>
+    <dimen name="share_button_padding">13dp</dimen>
+    <dimen name="share_button_margin_end">20dp</dimen>
+    <dimen name="like_button_margin_horizontal">10dp</dimen>
+    <dimen name="delete_button_margin_horizontal">20dp</dimen>
+    <dimen name="quote_constraint_min_height">150dp</dimen>
+    <dimen name="quote_item_padding_horizontal">30dp</dimen>
+    <dimen name="quote_author_margin_top">8dp</dimen>
+    <dimen name="quote_author_padding_horizontal">30dp</dimen>
+    <dimen name="quote_author_padding_vertical">13dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="quote_body_size">22sp</dimen>
+    <dimen name="quote_author_size">15sp</dimen>
+
+    <!-- Home Tag item -->
+    <dimen name="tag_cardview_margin_horizontal">2dp</dimen>
+    <dimen name="tag_constraint_padding_horizontal">30dp</dimen>
+    <dimen name="tag_constraint_padding_vertical">12dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="name_size">16sp</dimen>
+
+    <!-- Viewpager Quotes item -->
+    <dimen name="background_quote_small_size">90dp</dimen>
+    <dimen name="background_quote_big_size">100dp</dimen>
+    <dimen name="background_quote_top_margin_start">28dp</dimen>
+    <dimen name="background_quote_top_margin_top">244dp</dimen>
+    <dimen name="background_quote_bottom_margin_end">28dp</dimen>
+    <dimen name="background_quote_bottom_margin_bottom">244dp</dimen>
+    <dimen name="slide_quote_text_padding_horizontal">30dp</dimen>
+    <dimen name="slide_author_text_margin_top">20dp</dimen>
+    <dimen name="slide_default_button_size">60dp</dimen>
+    <dimen name="slide_default_bottom_margin_bottom">25dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="slide_quote_body_size">26sp</dimen>
+    <dimen name="slide_quote_author_size">15sp</dimen>
 </resources>

@@ -22,7 +22,7 @@
             android:id="@+id/nav_host_fragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/constraint_zero_dimen"
             app:defaultNavHost="true"
             app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
             app:layout_constraintStart_toStartOf="parent"

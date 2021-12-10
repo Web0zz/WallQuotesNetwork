@@ -9,25 +9,33 @@
             type="java.lang.String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        tools:background="@color/dark_background">
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/default_cardview_radius"
+        android:elevation="@dimen/default_elevation"
+        android:layout_marginHorizontal="@dimen/tag_cardview_margin_horizontal">
 
-        <TextView
-            android:id="@+id/category_name_textView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{tagName}"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Love" />
+            android:paddingHorizontal="@dimen/tag_constraint_padding_horizontal"
+            android:paddingVertical="@dimen/tag_constraint_padding_vertical">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/category_name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{tagName}"
+                android:textColor="@color/quote_text"
+                android:textSize="@dimen/name_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Love" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
