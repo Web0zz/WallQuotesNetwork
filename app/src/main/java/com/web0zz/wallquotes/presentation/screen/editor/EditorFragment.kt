@@ -130,7 +130,9 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     private fun handleEditorState(isDone: Boolean) {
-        if (isDone) Toast.makeText(context, "Quote Ready", Toast.LENGTH_SHORT).show()
+        if (isDone) {
+            Toast.makeText(context, "Quote Ready", Toast.LENGTH_SHORT).show()
+        }
         else Toast.makeText(context, "Quote Not Ready", Toast.LENGTH_SHORT).show()
     }
 
