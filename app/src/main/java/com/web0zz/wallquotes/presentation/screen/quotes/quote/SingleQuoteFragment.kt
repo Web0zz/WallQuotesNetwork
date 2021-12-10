@@ -8,14 +8,13 @@ import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.ViewQuotesItemBinding
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
-import com.web0zz.wallquotes.presentation.base.BaseSimpleFragment
-import com.web0zz.wallquotes.presentation.screen.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
-class SingleQuoteFragment : BaseFragment<ViewQuotesItemBinding, SingleQuoteViewModel>(ViewQuotesItemBinding::inflate) {
+class SingleQuoteFragment :
+    BaseFragment<ViewQuotesItemBinding, SingleQuoteViewModel>(ViewQuotesItemBinding::inflate) {
     override val mViewModel: SingleQuoteViewModel by viewModels()
     private lateinit var selectedQuotes: Quotes
 

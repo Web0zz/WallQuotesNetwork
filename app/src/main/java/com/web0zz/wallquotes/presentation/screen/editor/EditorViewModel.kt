@@ -4,10 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.domain.usecase.quotes.DeleteQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.InsertQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
-import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -22,11 +21,11 @@ import javax.inject.Inject
 @HiltViewModel
 class EditorViewModel @Inject constructor(
     private val insertQuotesUseCase: InsertQuotesUseCase,
-    private val updateQuotesUseCase: UpdateQuotesUseCase,
-    private val deleteQuotesUseCase: DeleteQuotesUseCase
+    private val updateQuotesUseCase: UpdateQuotesUseCase
 ) : BaseViewModel() {
 
-    private val _editorUiState: MutableStateFlow<EditorUiState> = MutableStateFlow(EditorUiState.Loading)
+    private val _editorUiState: MutableStateFlow<EditorUiState> =
+        MutableStateFlow(EditorUiState.Loading)
     val editorUiState: StateFlow<EditorUiState> = _editorUiState
 
     fun insertQuotes(quotes: Quotes) {
@@ -46,19 +45,6 @@ class EditorViewModel @Inject constructor(
         job?.cancel()
 
         updateQuotesUseCase(quotes, viewModelScope) {
-            job = viewModelScope.launch {
-                it.onStart { setLoading() }
-                    .collect { result ->
-                        result.mapBoth(::handleActionTrue, ::handleFailure)
-                    }
-            }
-        }
-    }
-
-    fun deleteQuotes(quotes: Quotes) {
-        job?.cancel()
-
-        deleteQuotesUseCase(quotes, viewModelScope) {
             job = viewModelScope.launch {
                 it.onStart { setLoading() }
                     .collect { result ->

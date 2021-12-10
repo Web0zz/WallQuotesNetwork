@@ -2,11 +2,9 @@ package com.web0zz.wallquotes.presentation
 
 import android.view.Menu
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.ActivityMainBinding
@@ -23,12 +21,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun initUi() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
 
         setSupportActionBar(activityDataBinding.mainToolbar)
 
-        val appBarConfiguration = AppBarConfiguration(topLevelDestinationIds = setOf(R.id.loginFragment, R.id.homeFragment))
+        val appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(
+                R.id.loginFragment,
+                R.id.homeFragment
+            )
+        )
 
         activityDataBinding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
     }

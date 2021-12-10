@@ -1,9 +1,9 @@
 package com.web0zz.wallquotes.di
 
-import com.web0zz.wallquotes.data.repository.TagRepositoryImpl
 import com.web0zz.wallquotes.data.repository.QuotesRepositoryImpl
-import com.web0zz.wallquotes.domain.repository.TagRepository
+import com.web0zz.wallquotes.data.repository.TagRepositoryImpl
 import com.web0zz.wallquotes.domain.repository.QuotesRepository
+import com.web0zz.wallquotes.domain.repository.TagRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

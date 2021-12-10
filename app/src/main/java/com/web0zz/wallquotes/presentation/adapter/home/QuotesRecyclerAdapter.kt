@@ -15,7 +15,13 @@ class QuotesRecyclerAdapter(
     override fun getItemCount() = quotesList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuotesViewHolder {
-        return QuotesViewHolder.create(parent, onClickUpdate, onClickShare, onClickLike, onClickDelete)
+        return QuotesViewHolder.create(
+            parent,
+            onClickUpdate,
+            onClickShare,
+            onClickLike,
+            onClickDelete
+        )
     }
 
     override fun onBindViewHolder(holder: QuotesViewHolder, position: Int) {

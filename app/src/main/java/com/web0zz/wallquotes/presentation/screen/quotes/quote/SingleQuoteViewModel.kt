@@ -2,7 +2,6 @@ package com.web0zz.wallquotes.presentation.screen.quotes.quote
 
 import androidx.lifecycle.viewModelScope
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.domain.usecase.quotes.DeleteQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SingleQuoteViewModel @Inject constructor(
     private val updateQuotesUseCase: UpdateQuotesUseCase
-) : BaseViewModel(){
+) : BaseViewModel() {
     // TODO add event result listener soon
 
     fun updateQuote(quote: Quotes) {

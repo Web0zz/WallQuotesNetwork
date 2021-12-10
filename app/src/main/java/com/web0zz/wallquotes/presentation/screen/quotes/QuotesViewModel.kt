@@ -21,7 +21,8 @@ class QuotesViewModel @Inject constructor(
     private val getByTagUseCase: GetByTagUseCase
 ) : BaseViewModel() {
 
-    private var _quotesUiState: MutableStateFlow<QuotesUiState> = MutableStateFlow(QuotesUiState.Loading)
+    private var _quotesUiState: MutableStateFlow<QuotesUiState> =
+        MutableStateFlow(QuotesUiState.Loading)
     val quotesUiState: StateFlow<QuotesUiState> = _quotesUiState
 
     fun getByTag(selectedTag: String) {

@@ -3,17 +3,20 @@ package com.web0zz.wallquotes.presentation.screen.home
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
 import com.web0zz.wallquotes.domain.exception.Failure
-import com.web0zz.wallquotes.domain.model.Tag
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.domain.usecase.*
+import com.web0zz.wallquotes.domain.model.Tag
+import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.DeleteQuotesUseCase
-import com.web0zz.wallquotes.domain.usecase.tag.GetAllTagUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.GetQuotesUseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.UpdateQuotesUseCase
+import com.web0zz.wallquotes.domain.usecase.tag.GetAllTagUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,10 +29,12 @@ class HomeViewModel @Inject constructor(
     private val updateQuotesUseCase: UpdateQuotesUseCase
 ) : BaseViewModel() {
 
-    private val _homeQuotesUiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
+    private val _homeQuotesUiState: MutableStateFlow<HomeUiState> =
+        MutableStateFlow(HomeUiState.Loading)
     val homeQuotesUiState: StateFlow<HomeUiState> = _homeQuotesUiState
 
-    private val _homeTagUiState: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState.Loading)
+    private val _homeTagUiState: MutableStateFlow<HomeUiState> =
+        MutableStateFlow(HomeUiState.Loading)
     val homeTagUiState: StateFlow<HomeUiState> = _homeTagUiState
 
 

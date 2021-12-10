@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    
+
     <data>
+
         <variable
             name="quotes"
             type="com.web0zz.wallquotes.domain.model.Quotes" />
@@ -32,9 +33,9 @@
             android:layout_height="@dimen/background_quote_big_size"
             android:layout_marginEnd="@dimen/background_quote_bottom_margin_end"
             android:layout_marginBottom="@dimen/background_quote_bottom_margin_bottom"
+            android:contentDescription="@string/double_quote_background"
             android:rotationY="-180"
             android:src="@drawable/double_quote"
-            android:contentDescription="@string/double_quote_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:tint="@color/quota_view_color" />
@@ -74,11 +75,11 @@
             android:id="@+id/quotes_like_imageButton"
             android:layout_width="@dimen/slide_default_button_size"
             android:layout_height="@dimen/slide_default_button_size"
-            android:elevation="@dimen/default_elevation"
-            android:background="@drawable/pager_quote_button_background"
-            android:src="@drawable/ic_unselected_like"
             android:layout_marginBottom="@dimen/slide_default_bottom_margin_bottom"
+            android:background="@drawable/pager_quote_button_background"
             android:contentDescription="@string/like_quote"
+            android:elevation="@dimen/default_elevation"
+            android:src="@drawable/ic_unselected_like"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -88,11 +89,11 @@
             android:id="@+id/quotes_share_imageButton"
             android:layout_width="@dimen/slide_default_button_size"
             android:layout_height="@dimen/slide_default_button_size"
-            android:elevation="@dimen/default_elevation"
-            android:background="@drawable/pager_quote_button_background"
-            android:src="@drawable/ic_share"
             android:layout_marginBottom="@dimen/slide_default_bottom_margin_bottom"
+            android:background="@drawable/pager_quote_button_background"
             android:contentDescription="@string/share_quote"
+            android:elevation="@dimen/default_elevation"
+            android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/quotes_like_imageButton"
             app:layout_constraintHorizontal_bias="0.5"

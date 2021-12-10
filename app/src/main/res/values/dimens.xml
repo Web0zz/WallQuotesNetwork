@@ -6,8 +6,6 @@
     <dimen name="default_cardview_radius">10dp</dimen>
 
     <!-- Common quote -->
-    <dimen name="selected_quote_padding">15dp</dimen>
-    <dimen name="unselected_quote_padding">0dp</dimen>
     <dimen name="default_quote_button_size">60dp</dimen>
 
     <!-- Login Screen -->

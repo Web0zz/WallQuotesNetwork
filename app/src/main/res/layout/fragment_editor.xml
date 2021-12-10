@@ -42,11 +42,11 @@
             android:id="@+id/edit_publish_imageButton"
             android:layout_width="@dimen/default_quote_button_size"
             android:layout_height="@dimen/default_quote_button_size"
-            android:elevation="@dimen/default_elevation"
-            android:background="@drawable/pager_quote_button_background"
-            android:src="@drawable/ic_publish"
             android:layout_marginBottom="@dimen/edit_buttons_margin_bottom"
+            android:background="@drawable/pager_quote_button_background"
             android:contentDescription="@string/publish_quote"
+            android:elevation="@dimen/default_elevation"
+            android:src="@drawable/ic_publish"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_TextField"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -56,11 +56,11 @@
             android:id="@+id/edit_share_imageButton"
             android:layout_width="@dimen/default_quote_button_size"
             android:layout_height="@dimen/default_quote_button_size"
-            android:elevation="@dimen/default_elevation"
-            android:background="@drawable/pager_quote_button_background"
-            android:src="@drawable/ic_share"
             android:layout_marginBottom="@dimen/edit_buttons_margin_bottom"
+            android:background="@drawable/pager_quote_button_background"
             android:contentDescription="@string/share_quote"
+            android:elevation="@dimen/default_elevation"
+            android:src="@drawable/ic_share"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_TextField"
             app:layout_constraintEnd_toStartOf="@+id/edit_publish_imageButton"
             app:layout_constraintHorizontal_bias="0.5"
@@ -78,7 +78,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_textInputEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

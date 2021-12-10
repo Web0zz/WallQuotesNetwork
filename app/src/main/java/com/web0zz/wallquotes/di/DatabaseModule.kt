@@ -15,7 +15,8 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideQuotesDatabase(application: Application): QuotesDatabase = QuotesDatabase.getInstance(application)
+    fun provideQuotesDatabase(application: Application): QuotesDatabase =
+        QuotesDatabase.getInstance(application)
 
     @Singleton
     @Provides

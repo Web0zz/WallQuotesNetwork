@@ -9,16 +9,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentHomeBinding
 import com.web0zz.wallquotes.domain.exception.Failure
-import com.web0zz.wallquotes.domain.model.Tag
 import com.web0zz.wallquotes.domain.model.Quotes
-import com.web0zz.wallquotes.presentation.adapter.home.TagRecyclerAdapter
+import com.web0zz.wallquotes.domain.model.Tag
 import com.web0zz.wallquotes.presentation.adapter.home.QuotesRecyclerAdapter
+import com.web0zz.wallquotes.presentation.adapter.home.TagRecyclerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
-import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -31,7 +31,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 ) {
     override val mViewModel: HomeViewModel by viewModels()
     private val navController by lazy {
-        getFragmentNavController(R.id.nav_host_fragmentContainerView)
+        activity?.let {
+            Navigation.findNavController(it, R.id.nav_host_fragmentContainerView)
+        }
     }
 
     override fun onStartInvoke() {
@@ -49,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.add_quote -> {
                 navigateToEdit(null)
                 true
@@ -154,7 +156,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     private fun handleQuotesData(quotes: List<Quotes>) {
         with(fragmentBinding.quotesRecyclerView) {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = QuotesRecyclerAdapter(quotes, ::navigateToEdit, ::shareQuote, ::likeQuote, ::deleteQuote)
+            adapter = QuotesRecyclerAdapter(
+                quotes,
+                ::navigateToEdit,
+                ::shareQuote,
+                ::likeQuote,
+                ::deleteQuote
+            )
         }
     }
 
@@ -172,7 +180,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR","Error on Home: $exceptionMessage")
+        Log.e("ERROR", "Error on Home: $exceptionMessage")
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

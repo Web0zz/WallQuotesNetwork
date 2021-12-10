@@ -10,4 +10,4 @@ data class Quotes(
     val authorName: String,
     val tag: String,
     var isLiked: Boolean = false
-): Parcelable
+) : Parcelable

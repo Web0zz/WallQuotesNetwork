@@ -63,7 +63,7 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
     private fun handleQuotes(quotes: List<Quotes>) {
         val pagerAdapter =
             QuotesSlidePagerAdapter(this, quotes.size)
-            { SingleQuoteFragment.newInstance(quotes[it])}
+            { SingleQuoteFragment.newInstance(quotes[it]) }
 
         viewPager2 = fragmentBinding.quotesViewPager2
 
@@ -77,7 +77,7 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
     }
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR","Error on Home: $exceptionMessage")
+        Log.e("ERROR", "Error on Home: $exceptionMessage")
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

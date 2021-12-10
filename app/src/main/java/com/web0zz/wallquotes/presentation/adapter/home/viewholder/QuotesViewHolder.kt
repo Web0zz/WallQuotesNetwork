@@ -10,7 +10,6 @@ import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.ViewHomeQuoteItemBinding
 import com.web0zz.wallquotes.domain.model.Quotes
 
-
 class QuotesViewHolder(
     private val binding: ViewHomeQuoteItemBinding,
     private val onClickUpdate: (Quotes) -> Unit,

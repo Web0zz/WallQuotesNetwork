@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="quote"
             type="com.web0zz.wallquotes.domain.model.Quotes" />
@@ -12,21 +13,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/constraint_padding_horizontal"
         android:layout_marginHorizontal="@dimen/constraint_margin_horizontal"
-        android:layout_marginVertical="@dimen/constraint_margin_vertical">
+        android:layout_marginVertical="@dimen/constraint_margin_vertical"
+        android:paddingHorizontal="@dimen/constraint_padding_horizontal">
 
         <ImageButton
             android:id="@+id/item_update_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/update_button_margin_horizontal"
-            android:elevation="@dimen/default_elevation"
             android:background="@drawable/quote_button_background"
+            android:contentDescription="@string/edit_quote"
+            android:elevation="@dimen/default_elevation"
             android:padding="@dimen/default_item_button_padding"
             android:src="@drawable/ic_edit"
             android:visibility="gone"
-            android:contentDescription="@string/edit_quote"
             app:layout_constraintBottom_toBottomOf="@+id/quote_item_cardView"
             app:layout_constraintEnd_toStartOf="@+id/item_like_imageButton"
             app:layout_constraintTop_toBottomOf="@+id/quote_item_cardView" />
@@ -36,11 +37,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/share_button_margin_end"
-            android:elevation="@dimen/default_elevation"
             android:background="@drawable/quote_button_background"
+            android:contentDescription="@string/share_quote"
+            android:elevation="@dimen/default_elevation"
             android:padding="@dimen/share_button_padding"
             android:src="@drawable/ic_share"
-            android:contentDescription="@string/share_quote"
             app:layout_constraintBottom_toBottomOf="@+id/quote_item_cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quote_item_cardView" />
@@ -49,12 +50,12 @@
             android:id="@+id/item_like_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/default_elevation"
             android:layout_marginHorizontal="@dimen/like_button_margin_horizontal"
             android:background="@drawable/quote_button_background"
+            android:contentDescription="@string/like_quote"
+            android:elevation="@dimen/default_elevation"
             android:padding="@dimen/default_item_button_padding"
             android:src="@drawable/ic_unselected_like"
-            android:contentDescription="@string/like_quote"
             app:layout_constraintBottom_toBottomOf="@+id/quote_item_cardView"
             app:layout_constraintEnd_toStartOf="@+id/item_share_imageButton"
             app:layout_constraintTop_toBottomOf="@+id/quote_item_cardView" />
@@ -63,13 +64,13 @@
             android:id="@+id/item_delete_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/default_elevation"
             android:layout_marginHorizontal="@dimen/delete_button_margin_horizontal"
             android:background="@drawable/quote_button_background"
+            android:contentDescription="@string/delete_quote"
+            android:elevation="@dimen/default_elevation"
             android:padding="@dimen/default_item_button_padding"
             android:src="@drawable/ic_delete"
             android:visibility="gone"
-            android:contentDescription="@string/delete_quote"
             app:layout_constraintBottom_toBottomOf="@+id/quote_item_cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quote_item_cardView" />
@@ -79,14 +80,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="item_like_imageButton, item_share_imageButton"/>
+            app:constraint_referenced_ids="item_like_imageButton, item_share_imageButton" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/personal_buttons_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="item_delete_imageButton, item_update_imageButton"/>
+            app:constraint_referenced_ids="item_delete_imageButton, item_update_imageButton" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/quote_item_cardView"

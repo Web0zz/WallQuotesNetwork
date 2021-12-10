@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="tagName"
             type="java.lang.String" />
@@ -12,10 +13,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/tag_cardview_margin_horizontal"
         android:background="@color/white"
-        app:cardCornerRadius="@dimen/default_cardview_radius"
         android:elevation="@dimen/default_elevation"
-        android:layout_marginHorizontal="@dimen/tag_cardview_margin_horizontal">
+        app:cardCornerRadius="@dimen/default_cardview_radius">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

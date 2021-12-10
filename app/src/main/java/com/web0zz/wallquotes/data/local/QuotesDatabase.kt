@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.web0zz.wallquotes.data.local.model.TagEntity
 import com.web0zz.wallquotes.data.local.model.QuotesEntity
+import com.web0zz.wallquotes.data.local.model.TagEntity
 
 @Database(entities = [QuotesEntity::class, TagEntity::class], version = 1)
 abstract class QuotesDatabase : RoomDatabase() {

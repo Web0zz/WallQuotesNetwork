@@ -14,12 +14,10 @@ import com.web0zz.wallquotes.databinding.FragmentEditorBinding
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.presentation.base.BaseFragment
-import com.web0zz.wallquotes.presentation.util.FragmentUtil.getFragmentNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
@@ -92,7 +90,7 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     private fun onPublishQuote() {
-        when(isUpdate) {
+        when (isUpdate) {
             true -> {
                 val newBodyText = fragmentBinding.editQuoteTextView.text.toString()
                 val quoteData = Quotes(
@@ -127,8 +125,7 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     private fun handleEditorState(isDone: Boolean) {
         if (isDone) {
             Toast.makeText(context, "Quote Ready", Toast.LENGTH_SHORT).show()
-        }
-        else Toast.makeText(context, "Quote Not Ready", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(context, "Quote Not Ready", Toast.LENGTH_SHORT).show()
     }
 
     private fun handleFailure(failure: Failure) {
@@ -138,7 +135,7 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     }
 
     private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR","Error on Login: $exceptionMessage")
+        Log.e("ERROR", "Error on Login: $exceptionMessage")
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }
