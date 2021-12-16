@@ -5,7 +5,7 @@ This is the beginning of the faceb... sorry this is just the beginning of the si
 <br><br>
 ![ic_launcher](https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/ic_launcher.png)
 
-### Features
+### Libraries & Tools
 - Navigation : Used for navigation between screens.
 - Room : Used for hold the quotes data.
 - Hilt : Used for dependency injection.
