@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity<B : ViewDataBinding>(
-    private val inflateLayout: (LayoutInflater) -> B
+abstract class BaseActivity<VB : ViewDataBinding>(
+    private val inflateLayout: (LayoutInflater) -> VB
 ) : AppCompatActivity() {
-    protected lateinit var activityDataBinding: B
+    protected lateinit var activityDataBinding: VB
 
     open fun initTheme() {}
     open fun initUi() {}

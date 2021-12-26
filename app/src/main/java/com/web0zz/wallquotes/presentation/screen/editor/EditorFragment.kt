@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentEditorBinding
@@ -25,6 +26,12 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     FragmentEditorBinding::inflate
 ) {
     override val mViewModel: EditorViewModel by viewModels()
+    private val navController by lazy {
+        activity?.let {
+            Navigation.findNavController(it, R.id.nav_host_fragmentContainerView)
+        }
+    }
+
     private val safeArgs: EditorFragmentArgs by navArgs()
 
     private var isUpdate = false
@@ -101,7 +108,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
                     isLiked = updateQuote.isLiked
                 )
 
-                Toast.makeText(context, "Quote data updated", Toast.LENGTH_SHORT).show()
                 mViewModel.updateQuotes(quoteData)
             }
             false -> {
@@ -112,10 +118,11 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
                     isLiked = true
                 )
 
-                Toast.makeText(context, "New Quote data inserted", Toast.LENGTH_SHORT).show()
                 mViewModel.insertQuotes(quoteData)
             }
         }
+
+        navController?.popBackStack()
     }
 
     private fun handleLoading() {

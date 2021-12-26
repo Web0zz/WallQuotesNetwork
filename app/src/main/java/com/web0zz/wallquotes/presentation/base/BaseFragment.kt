@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<B : ViewDataBinding, V : BaseViewModel>(
-    private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> B
+abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
+    private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> VB
 ) : Fragment() {
-    private var _fragmentBinding: B? = null
+    private var _fragmentBinding: VB? = null
     protected val fragmentBinding get() = _fragmentBinding!!
 
-    protected abstract val mViewModel: V
+    protected abstract val mViewModel: VM
 
     internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
 
