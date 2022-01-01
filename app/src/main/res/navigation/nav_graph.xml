@@ -42,6 +42,10 @@
             app:destination="@id/editorFragment" />
         <argument
             android:name="selected_category"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="is_liked_quotes"
+            app:argType="boolean" />
     </fragment>
 </navigation>

@@ -11,6 +11,9 @@ interface QuotesDao {
     @Query("SELECT * FROM quotes_table WHERE tag = :selectedTag")
     fun getByTag(selectedTag: String): List<QuotesEntity>
 
+    @Query("SELECT * FROM quotes_table WHERE isLiked = 1")
+    fun getLikedQuotes(): List<QuotesEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQuotes(quotes: QuotesEntity)
 

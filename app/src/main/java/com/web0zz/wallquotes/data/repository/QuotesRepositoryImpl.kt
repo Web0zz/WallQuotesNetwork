@@ -53,6 +53,21 @@ class QuotesRepositoryImpl @Inject constructor(
         emit(result)
     }.flowOn(Dispatchers.IO)
 
+    override suspend fun getLikedQuotes(): Flow<Result<List<Quotes>, Failure>> = flow {
+        val result: Result<List<Quotes>, Failure> =
+            try {
+                val data = quotesDao.getLikedQuotes().map {
+                    mapQuotesEntity(it)
+                }
+
+                Ok(data)
+            } catch (e: Exception) {
+                Err(Failure.UnknownError(FAILED_READING, e.localizedMessage))
+            }
+
+        emit(result)
+    }.flowOn(Dispatchers.IO)
+
     override suspend fun insertQuotes(quotes: Quotes): Flow<Result<UseCase.None, Failure>> = flow {
         val result: Result<UseCase.None, Failure> =
             try {

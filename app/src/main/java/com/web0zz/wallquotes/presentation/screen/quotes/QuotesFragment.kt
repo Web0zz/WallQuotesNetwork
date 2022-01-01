@@ -18,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
@@ -28,15 +29,19 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
     private val safeArgs: QuotesFragmentArgs by navArgs()
 
     private lateinit var selectedCategory: String
+    private var isLikedQuotes by Delegates.notNull<Boolean>()
     private lateinit var viewPager2: ViewPager2
 
     override fun onStartInvoke() {
-        setQuotes(selectedCategory)
+        if (isLikedQuotes) setLikedQuotes() else setQuotes(selectedCategory)
     }
 
     override fun onCreateInvoke() {
-        selectedCategory = safeArgs.selectedCategory
+        safeArgs.selectedCategory?.let { selectedCategory = it }
+        isLikedQuotes = safeArgs.isLikedQuotes
+    }
 
+    override fun onCreateViewInvoke() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mViewModel.quotesUiState.collect { handleViewState(it) }
@@ -54,6 +59,10 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
     private fun setQuotes(selectedCategory: String) {
         mViewModel.getByTag(selectedCategory)
+    }
+
+    private fun setLikedQuotes() {
+        mViewModel.getLikedQuotes()
     }
 
     private fun handleLoading() {

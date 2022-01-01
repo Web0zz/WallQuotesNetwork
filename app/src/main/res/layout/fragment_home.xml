@@ -62,5 +62,17 @@
             tools:listitem="@layout/view_home_quote_item"
             tools:orientation="vertical" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/home_add_quote_floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/add_button_margin"
+            android:backgroundTint="@color/dark_background"
+            app:tint="@color/white"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/add_new_quote" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

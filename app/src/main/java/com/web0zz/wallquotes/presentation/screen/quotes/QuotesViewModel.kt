@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.mapBoth
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
+import com.web0zz.wallquotes.domain.usecase.UseCase
 import com.web0zz.wallquotes.domain.usecase.quotes.GetByTagUseCase
+import com.web0zz.wallquotes.domain.usecase.quotes.GetLikedQuotesUseCase
 import com.web0zz.wallquotes.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @DelicateCoroutinesApi
 @HiltViewModel
 class QuotesViewModel @Inject constructor(
-    private val getByTagUseCase: GetByTagUseCase
+    private val getByTagUseCase: GetByTagUseCase,
+    private val getLikedQuotesUseCase: GetLikedQuotesUseCase
 ) : BaseViewModel() {
 
     private var _quotesUiState: MutableStateFlow<QuotesUiState> =
@@ -29,6 +32,19 @@ class QuotesViewModel @Inject constructor(
         job?.cancel()
 
         getByTagUseCase(selectedTag, viewModelScope) {
+            job = viewModelScope.launch {
+                it.onStart { setLoading() }
+                    .collect { result ->
+                        result.mapBoth(::handleQuotesList, ::handleFailure)
+                    }
+            }
+        }
+    }
+
+    fun getLikedQuotes() {
+        job?.cancel()
+
+        getLikedQuotesUseCase(UseCase.None(), viewModelScope) {
             job = viewModelScope.launch {
                 it.onStart { setLoading() }
                     .collect { result ->

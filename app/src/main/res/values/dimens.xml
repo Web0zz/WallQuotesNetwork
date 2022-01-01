@@ -29,6 +29,7 @@
     <dimen name="tag_recyclerview_margin_horizontal">4dp</dimen>
     <dimen name="quotes_header_padding_horizontal">25dp</dimen>
     <dimen name="quotes_header_padding_vertical">10dp</dimen>
+    <dimen name="add_button_margin">25dp</dimen>
 
     <!-- Text Size -->
     <dimen name="home_header_text_size">18sp</dimen>

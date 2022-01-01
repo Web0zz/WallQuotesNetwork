@@ -6,9 +6,9 @@
         android:id="@+id/home_menu_group"
         android:visible="false">
         <item
-            android:id="@+id/add_quote"
-            android:icon="@drawable/ic_add"
-            android:title="@string/add_quote"
+            android:id="@+id/liked_quote"
+            android:icon="@drawable/ic_selected_like"
+            android:title="@string/liked"
             app:showAsAction="always" />
     </group>
 </menu>

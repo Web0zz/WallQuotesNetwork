@@ -36,13 +36,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         }
     }
 
-    override fun onStartInvoke() {
-        loadTagList()
-        loadQuotesList()
-    }
-
     override fun onCreateInvoke() {
         setHasOptionsMenu(true)
+        loadTagList()
+        loadQuotesList()
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -52,8 +49,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.add_quote -> {
-                navigateToEdit(null)
+            R.id.liked_quote -> {
+                navigateToQuotes(null, true)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -71,6 +68,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
                     mViewModel.homeTagUiState.collect { handleTagViewState(it) }
                 }
             }
+        }
+
+        fragmentBinding.homeAddQuoteFloatingActionButton.setOnClickListener {
+            navigateToEdit(null)
         }
     }
 
@@ -139,8 +140,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         }
     }
 
-    private fun navigateToQuotes(selectedTagTitle: String) {
-        val action = HomeFragmentDirections.actionHomeFragmentToQuotesFragment(selectedTagTitle)
+    private fun navigateToQuotes(selectedTagTitle: String?, isLikedQuotes: Boolean = false) {
+        val action = HomeFragmentDirections.actionHomeFragmentToQuotesFragment(selectedTagTitle, isLikedQuotes)
         navController?.navigate(action)
     }
 
