@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QuotesViewModel @Inject constructor(
     private val getByTagUseCase: GetByTagUseCase,
-    private val getLikedQuotesUseCase: GetLikedQuotesUseCase
+    private val getLikedQuotesUseCase: GetLikedQuotesUseCase,
 ) : BaseViewModel() {
 
     private var _quotesUiState: MutableStateFlow<QuotesUiState> =

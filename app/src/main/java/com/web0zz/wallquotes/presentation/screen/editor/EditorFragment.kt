@@ -70,7 +70,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
         fragmentBinding.editAuthorTextView.text = getString(R.string.itsMe)
     }
 
-
     private fun handleViewState(viewState: EditorViewModel.EditorUiState) {
         when (viewState) {
             is EditorViewModel.EditorUiState.Loading -> handleLoading()

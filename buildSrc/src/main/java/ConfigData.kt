@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 object ConfigData {
     const val compileSdkVersion = 31
     const val minSdkVersion = 21

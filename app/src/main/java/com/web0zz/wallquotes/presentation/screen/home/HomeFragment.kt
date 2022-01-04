@@ -141,7 +141,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
     }
 
     private fun navigateToQuotes(selectedTagTitle: String?, isLikedQuotes: Boolean = false) {
-        val action = HomeFragmentDirections.actionHomeFragmentToQuotesFragment(selectedTagTitle, isLikedQuotes)
+        val action = HomeFragmentDirections.actionHomeFragmentToQuotesFragment(
+            selectedTagTitle,
+            isLikedQuotes
+        )
         navController?.navigate(action)
     }
 

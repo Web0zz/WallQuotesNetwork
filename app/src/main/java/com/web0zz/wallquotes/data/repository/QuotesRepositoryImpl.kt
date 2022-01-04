@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class QuotesRepositoryImpl @Inject constructor(
-    private val quotesDao: QuotesDao
+    private val quotesDao: QuotesDao,
 ) : QuotesRepository {
     override suspend fun getQuotes(): Flow<Result<List<Quotes>, Failure>> = flow {
         val result: Result<List<Quotes>, Failure> =

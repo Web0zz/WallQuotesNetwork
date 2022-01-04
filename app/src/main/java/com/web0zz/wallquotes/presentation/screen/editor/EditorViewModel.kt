@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EditorViewModel @Inject constructor(
     private val insertQuotesUseCase: InsertQuotesUseCase,
-    private val updateQuotesUseCase: UpdateQuotesUseCase
+    private val updateQuotesUseCase: UpdateQuotesUseCase,
 ) : BaseViewModel() {
 
     private val _editorUiState: MutableStateFlow<EditorUiState> =

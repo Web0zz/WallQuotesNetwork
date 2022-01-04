@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused", "unused", "unused")
+
 package com.web0zz.wallquotes.di
 
 import com.web0zz.wallquotes.data.repository.QuotesRepositoryImpl
@@ -29,4 +31,3 @@ annotation class QuotesRepositoryImp
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class TagRepositoryImp
-

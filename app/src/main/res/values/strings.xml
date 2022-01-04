@@ -17,7 +17,6 @@
     <string name="quotes">Quotes</string>
 
     <string name="login_state_key">LOGIN</string>
-    <string name="add_quote">Add Quote</string>
     <string name="publish_quote">Publish Quote</string>
     <string name="liked">Liked</string>
     <string name="add_new_quote">Add new quote</string>

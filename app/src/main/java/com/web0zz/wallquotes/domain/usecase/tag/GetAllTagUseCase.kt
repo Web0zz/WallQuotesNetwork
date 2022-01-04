@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetAllTagUseCase @Inject constructor(
-    @TagRepositoryImp private val tagRepository: TagRepository
+    @TagRepositoryImp private val tagRepository: TagRepository,
 ) : UseCase<List<Tag>, Failure, UseCase.None>() {
     override suspend fun run(params: None): Flow<Result<List<Tag>, Failure>> {
         return tagRepository.getTags()

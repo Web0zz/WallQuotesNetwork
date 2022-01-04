@@ -15,7 +15,7 @@ class QuotesViewHolder(
     private val onClickUpdate: (Quotes) -> Unit,
     private val onClickShare: (String) -> Unit,
     private val onClickLike: (Quotes) -> Unit,
-    private val onClickDelete: (Quotes) -> Unit
+    private val onClickDelete: (Quotes) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(quote: Quotes) {
         var isClicked = false
@@ -78,7 +78,7 @@ class QuotesViewHolder(
             onClickUpdate: (Quotes) -> Unit,
             onClickShare: (String) -> Unit,
             onClickLike: (Quotes) -> Unit,
-            onClickDelete: (Quotes) -> Unit
+            onClickDelete: (Quotes) -> Unit,
         ): QuotesViewHolder {
             val view = ViewHomeQuoteItemBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)

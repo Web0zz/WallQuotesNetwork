@@ -13,7 +13,7 @@ import javax.inject.Inject
 @DelicateCoroutinesApi
 @HiltViewModel
 class SingleQuoteViewModel @Inject constructor(
-    private val updateQuotesUseCase: UpdateQuotesUseCase
+    private val updateQuotesUseCase: UpdateQuotesUseCase,
 ) : BaseViewModel() {
     // TODO add event result listener soon
 

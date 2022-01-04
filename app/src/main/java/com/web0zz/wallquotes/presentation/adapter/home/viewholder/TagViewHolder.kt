@@ -8,7 +8,7 @@ import com.web0zz.wallquotes.domain.model.Tag
 
 class TagViewHolder(
     private val binding: ViewHomeTagItemBinding,
-    private val onClickTag: (String) -> Unit
+    private val onClickTag: (String) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(tag: Tag) {
         binding.tagName = tag.title
@@ -18,7 +18,7 @@ class TagViewHolder(
     companion object {
         fun create(
             parent: ViewGroup,
-            onClickCategory: (String) -> Unit
+            onClickCategory: (String) -> Unit,
         ): TagViewHolder {
             val view = ViewHomeTagItemBinding
                 .inflate(LayoutInflater.from(parent.context), parent, false)

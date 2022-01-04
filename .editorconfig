@@ -1,0 +1,4 @@
+[*.{kt, kts}]
+# noinspection EditorConfigKeyCorrectness
+disabled_rules = import-ordering
+insert_final_newline = true

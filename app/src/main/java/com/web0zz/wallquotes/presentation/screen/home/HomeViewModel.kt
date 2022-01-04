@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
     private val getQuotesUseCase: GetQuotesUseCase,
     private val getAllTagUseCase: GetAllTagUseCase,
     private val deleteQuotesUseCase: DeleteQuotesUseCase,
-    private val updateQuotesUseCase: UpdateQuotesUseCase
+    private val updateQuotesUseCase: UpdateQuotesUseCase,
 ) : BaseViewModel() {
 
     private val _homeQuotesUiState: MutableStateFlow<HomeUiState> =
@@ -36,7 +36,6 @@ class HomeViewModel @Inject constructor(
     private val _homeTagUiState: MutableStateFlow<HomeUiState> =
         MutableStateFlow(HomeUiState.Loading)
     val homeTagUiState: StateFlow<HomeUiState> = _homeTagUiState
-
 
     fun getAllQuotes() {
         job?.cancel()

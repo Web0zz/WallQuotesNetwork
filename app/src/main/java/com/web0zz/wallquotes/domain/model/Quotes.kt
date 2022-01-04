@@ -9,5 +9,5 @@ data class Quotes(
     val body: String,
     val authorName: String,
     val tag: String,
-    var isLiked: Boolean = false
+    var isLiked: Boolean = false,
 ) : Parcelable

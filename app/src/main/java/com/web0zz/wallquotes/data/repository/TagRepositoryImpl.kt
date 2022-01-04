@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class TagRepositoryImpl @Inject constructor(
-    private val tagDao: TagDao
+    private val tagDao: TagDao,
 ) : TagRepository {
     override suspend fun getTags(): Flow<Result<List<Tag>, Failure>> = flow {
         val result: Result<List<Tag>, Failure> =

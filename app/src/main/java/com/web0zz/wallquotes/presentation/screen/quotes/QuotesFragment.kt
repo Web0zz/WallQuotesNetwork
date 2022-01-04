@@ -71,8 +71,9 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
     private fun handleQuotes(quotes: List<Quotes>) {
         val pagerAdapter =
-            QuotesSlidePagerAdapter(this, quotes.size)
-            { SingleQuoteFragment.newInstance(quotes[it]) }
+            QuotesSlidePagerAdapter(this, quotes.size) {
+                SingleQuoteFragment.newInstance(quotes[it])
+            }
 
         viewPager2 = fragmentBinding.quotesViewPager2
 

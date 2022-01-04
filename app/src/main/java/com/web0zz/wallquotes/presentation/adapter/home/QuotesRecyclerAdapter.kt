@@ -10,7 +10,7 @@ class QuotesRecyclerAdapter(
     private val onClickUpdate: (Quotes) -> Unit,
     private val onClickShare: (String) -> Unit,
     private val onClickLike: (Quotes) -> Unit,
-    private val onClickDelete: (Quotes) -> Unit
+    private val onClickDelete: (Quotes) -> Unit,
 ) : RecyclerView.Adapter<QuotesViewHolder>() {
     override fun getItemCount() = quotesList.size
 

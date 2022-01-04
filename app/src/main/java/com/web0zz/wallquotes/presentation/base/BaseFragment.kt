@@ -8,7 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
-    private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> VB
+    private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> VB,
 ) : Fragment() {
     private var _fragmentBinding: VB? = null
     protected val fragmentBinding get() = _fragmentBinding!!
@@ -36,7 +36,7 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _fragmentBinding = inflateLayout(layoutInflater, container, false)
         onCreateViewInvoke()

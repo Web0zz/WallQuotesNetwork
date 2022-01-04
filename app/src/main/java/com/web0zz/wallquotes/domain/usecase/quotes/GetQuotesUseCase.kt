@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetQuotesUseCase @Inject constructor(
-    @QuotesRepositoryImp private val quotesRepository: QuotesRepository
+    @QuotesRepositoryImp private val quotesRepository: QuotesRepository,
 ) : UseCase<List<Quotes>, Failure, UseCase.None>() {
     override suspend fun run(params: None): Flow<Result<List<Quotes>, Failure>> {
         return quotesRepository.getQuotes()

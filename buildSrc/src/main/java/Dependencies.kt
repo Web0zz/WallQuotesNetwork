@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 object AndroidDependencies {
 
     const val coreLib = "androidx.core:core-ktx:${Versions.coreVersion}"

@@ -1,8 +1,13 @@
 package com.web0zz.wallquotes.domain.usecase
 
 import com.github.michaelbull.result.Result
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 // Learn more about this implementation
 //
@@ -16,7 +21,7 @@ abstract class UseCase<out Type, out Failure, in Params> where Type : Any {
     operator fun invoke(
         params: Params,
         scope: CoroutineScope = GlobalScope,
-        onResult: (Flow<Result<Type, Failure>>) -> Unit = {}
+        onResult: (Flow<Result<Type, Failure>>) -> Unit = {},
     ) {
         scope.launch(Dispatchers.Main) {
             val deferred = async(Dispatchers.IO) {
