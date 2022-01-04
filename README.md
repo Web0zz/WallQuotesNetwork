@@ -6,6 +6,9 @@
 This is the beginning of the faceb... sorry this is just the beginning of the simple quotes app that gives you many quotes to share them or paint to your home's wall. You can even create and edit new quotes. Who knows maybe one day a someone also will like your quotes like on twit..
 <br><br>
 
+## Screenshots 📱
+![quotes-screen](https://user-images.githubusercontent.com/61796073/147855564-208999f2-e839-45a5-86e0-43655fa40e61.jpg)
+
 ## Libraries & Tools 🛠️
 - [Kotlin](https://kotlinlang.org/docs/home.html)
   - [Flow](https://developer.android.com/kotlin/flow)
@@ -20,11 +23,3 @@ This is the beginning of the faceb... sorry this is just the beginning of the si
 ## Architecture
 ![ic_launcher](https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/arcihtecture.png)
 
-## Screenshots 📱
-<div>
-<img width="25%" alt="splash-screen" src="https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/splash.jpg" />
-<img width="25%" alt="login-screen" src="https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/login.jpg" />
-<img width="25%" alt="home-screen" src="https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/Home.jpg" />
-<img width="25%" alt="quotes-screen" src="https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/Slide.jpg" />
-<img width="25%" alt="edit-screen" src="https://github.com/Web0zz/WallQuotesNetwork/blob/master/readmeImages/edit.jpg" />
-</div>
