@@ -13,6 +13,7 @@ This is the beginning of the faceb... sorry this is just the beginning of the si
 - [Kotlin](https://kotlinlang.org/docs/home.html)
   - [Flow](https://developer.android.com/kotlin/flow)
   - [Coroutines](https://developer.android.com/kotlin/coroutines)
+- [ktlint](https://ktlint.github.io/#getting-started)
 - [Jetpack Components](https://developer.android.com/jetpack)
   - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
   - [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started) 
