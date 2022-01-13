@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentHomeBinding
 import com.web0zz.wallquotes.domain.exception.Failure
@@ -36,8 +37,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         }
     }
 
+    private var quotesRecyclerAdapter: QuotesRecyclerAdapter? = null
+    private var quotesRecyclerView: RecyclerView? = null
+
     override fun onCreateInvoke() {
         setHasOptionsMenu(true)
+    }
+
+    override fun onStartInvoke() {
         loadTagList()
         loadQuotesList()
     }
@@ -153,21 +160,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         navController?.navigate(action)
     }
 
+    private fun initRecyclerViewItems(quotesList: List<Quotes>) {
+        if (quotesRecyclerView == null || quotesRecyclerAdapter == null) {
+            initRecyclerView(quotesList)
+        } else if (fragmentBinding.quotesRecyclerView.adapter == null) {
+            with(fragmentBinding.quotesRecyclerView) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                adapter = quotesRecyclerAdapter
+            }
+
+            quotesRecyclerAdapter!!.differ.submitList(quotesList)
+        } else {
+            quotesRecyclerAdapter!!.differ.submitList(quotesList)
+        }
+    }
+
+    private fun initRecyclerView(quotesList: List<Quotes>) {
+        with(fragmentBinding.quotesRecyclerView) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = quotesRecyclerAdapter ?: QuotesRecyclerAdapter(
+                ::navigateToEdit,
+                ::shareQuote,
+                ::likeQuote,
+                ::deleteQuote
+            ).also {
+                quotesRecyclerAdapter = it
+            }
+
+            quotesRecyclerView = quotesRecyclerView ?: this
+        }
+
+        quotesRecyclerAdapter!!.differ.submitList(quotesList)
+    }
+
     private fun handleLoading() {
         // TODO will set loading view later
     }
 
     private fun handleQuotesData(quotes: List<Quotes>) {
-        with(fragmentBinding.quotesRecyclerView) {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = QuotesRecyclerAdapter(
-                quotes,
-                ::navigateToEdit,
-                ::shareQuote,
-                ::likeQuote,
-                ::deleteQuote
-            )
-        }
+        initRecyclerViewItems(quotes)
     }
 
     private fun handleTagData(tags: List<Tag>) {

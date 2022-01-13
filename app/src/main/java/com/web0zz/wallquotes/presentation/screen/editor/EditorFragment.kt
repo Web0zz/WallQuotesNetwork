@@ -120,8 +120,6 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
                 mViewModel.insertQuotes(quoteData)
             }
         }
-
-        navController?.popBackStack()
     }
 
     private fun handleLoading() {
@@ -131,6 +129,8 @@ class EditorFragment : BaseFragment<FragmentEditorBinding, EditorViewModel>(
     private fun handleEditorState(isDone: Boolean) {
         if (isDone) {
             Toast.makeText(context, "Quote Ready", Toast.LENGTH_SHORT).show()
+
+            navController?.popBackStack()
         } else Toast.makeText(context, "Quote Not Ready", Toast.LENGTH_SHORT).show()
     }
 

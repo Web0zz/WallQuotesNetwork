@@ -20,7 +20,6 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
     open fun onCreateInvoke() {}
     open fun onCreateViewInvoke() {}
     open fun onViewCreatedInvoke() {}
-
     open fun onStartInvoke() {}
 
     override fun onStart() {

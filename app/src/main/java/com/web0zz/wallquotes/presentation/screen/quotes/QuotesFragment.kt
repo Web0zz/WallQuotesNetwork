@@ -80,7 +80,7 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
         viewPager2.adapter = pagerAdapter
 
         TabLayoutMediator(fragmentBinding.indicatorTabLayout, fragmentBinding.quotesViewPager2)
-        { tab, position -> }.attach()
+        { _, _ -> }.attach()
     }
 
     private fun handleFailure(failure: Failure) {
