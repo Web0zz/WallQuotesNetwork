@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.web0zz.wallquotes.databinding.FragmentQuotesBinding
 import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
@@ -76,8 +77,10 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
             }
 
         viewPager2 = fragmentBinding.quotesViewPager2
-
         viewPager2.adapter = pagerAdapter
+
+        TabLayoutMediator(fragmentBinding.indicatorTabLayout, fragmentBinding.quotesViewPager2)
+        { tab, position -> }.attach()
     }
 
     private fun handleFailure(failure: Failure) {
