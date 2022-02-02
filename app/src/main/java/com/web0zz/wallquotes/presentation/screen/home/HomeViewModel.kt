@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,23 +30,19 @@ class HomeViewModel @Inject constructor(
     private val updateQuotesUseCase: UpdateQuotesUseCase,
 ) : BaseViewModel() {
 
-    private val _homeQuotesUiState: MutableStateFlow<HomeUiState> =
-        MutableStateFlow(HomeUiState.Loading)
-    val homeQuotesUiState: StateFlow<HomeUiState> = _homeQuotesUiState
-
-    private val _homeTagUiState: MutableStateFlow<HomeUiState> =
-        MutableStateFlow(HomeUiState.Loading)
-    val homeTagUiState: StateFlow<HomeUiState> = _homeTagUiState
+    private val _homeUiState: MutableStateFlow<HomeUiState> =
+        MutableStateFlow(HomeUiState(isLoading = true))
+    val homeUiState: StateFlow<HomeUiState> get() = _homeUiState
 
     fun getAllQuotes() {
         job?.cancel()
 
         getQuotesUseCase(UseCase.None(), viewModelScope) {
             job = viewModelScope.launch {
-                it.onStart { setLoading(true) }
+                it.onStart { setLoading() }
                     .collect { result ->
                         result.mapBoth(::handleQuotesList) {
-                            handleFailure(it, true)
+                            handleFailure(it)
                         }
                     }
             }
@@ -57,10 +54,10 @@ class HomeViewModel @Inject constructor(
 
         getAllTagUseCase(UseCase.None(), viewModelScope) {
             job = viewModelScope.launch {
-                it.onStart { setLoading(false) }
+                it.onStart { setLoading() }
                     .collect { result ->
                         result.mapBoth(::handleTagList) {
-                            handleFailure(it, false)
+                            handleFailure(it)
                         }
                     }
             }
@@ -87,27 +84,27 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun setLoading(isQuotes: Boolean) {
-        if (isQuotes) _homeQuotesUiState.value = HomeUiState.Loading
-        else _homeTagUiState.value = HomeUiState.Loading
+    private fun setLoading() {
+        _homeUiState.update { currentUiState ->
+            currentUiState.copy(isLoading = true)
+        }
     }
 
     private fun handleQuotesList(quotesData: List<Quotes>) {
-        _homeQuotesUiState.value = HomeUiState.Success(quotesData, null)
+        _homeUiState.update { currentUiState ->
+            currentUiState.copy(quotes = quotesData)
+        }
     }
 
     private fun handleTagList(tagData: List<Tag>) {
-        _homeTagUiState.value = HomeUiState.Success(null, tagData)
+        _homeUiState.update { currentUiState ->
+            currentUiState.copy(tags = tagData)
+        }
     }
 
-    private fun handleFailure(failure: Failure, isQuotes: Boolean) {
-        if (isQuotes) _homeQuotesUiState.value = HomeUiState.Error(failure)
-        else _homeTagUiState.value = HomeUiState.Error(failure)
-    }
-
-    sealed class HomeUiState {
-        object Loading : HomeUiState()
-        data class Success(val quotesData: List<Quotes>?, val tagData: List<Tag>?) : HomeUiState()
-        data class Error(val failure: Failure) : HomeUiState()
+    private fun handleFailure(failure: Failure) {
+        _homeUiState.update { currentUiState ->
+            currentUiState.copy(errorMessage = failure.message)
+        }
     }
 }
