@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,8 +26,8 @@ class QuotesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private var _quotesUiState: MutableStateFlow<QuotesUiState> =
-        MutableStateFlow(QuotesUiState.Loading)
-    val quotesUiState: StateFlow<QuotesUiState> = _quotesUiState
+        MutableStateFlow(QuotesUiState(isLoading = true))
+    val quotesUiState: StateFlow<QuotesUiState> get() = _quotesUiState
 
     fun getByTag(selectedTag: String) {
         job?.cancel()
@@ -55,20 +56,20 @@ class QuotesViewModel @Inject constructor(
     }
 
     private fun setLoading() {
-        _quotesUiState.value = QuotesUiState.Loading
+        _quotesUiState.update { currentUiState ->
+            currentUiState.copy(isLoading = true)
+        }
     }
 
     private fun handleQuotesList(quotesData: List<Quotes>) {
-        _quotesUiState.value = QuotesUiState.Success(quotesData)
+        _quotesUiState.update { currentUiState ->
+            currentUiState.copy(quoteList = quotesData)
+        }
     }
 
     private fun handleFailure(failure: Failure) {
-        _quotesUiState.value = QuotesUiState.Error(failure)
-    }
-
-    sealed class QuotesUiState {
-        object Loading : QuotesUiState()
-        data class Success(val data: List<Quotes>) : QuotesUiState()
-        data class Error(val failure: Failure) : QuotesUiState()
+        _quotesUiState.update { currentUiState ->
+            currentUiState.copy(errorMessage = failure.message)
+        }
     }
 }

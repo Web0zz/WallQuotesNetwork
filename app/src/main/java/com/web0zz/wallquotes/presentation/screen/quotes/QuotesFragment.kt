@@ -1,7 +1,7 @@
 package com.web0zz.wallquotes.presentation.screen.quotes
 
-import android.util.Log
-import android.widget.Toast
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -10,8 +10,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.web0zz.wallquotes.databinding.FragmentQuotesBinding
-import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
+import com.web0zz.wallquotes.presentation.MainActivity
 import com.web0zz.wallquotes.presentation.adapter.quotes.QuotesSlidePagerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 import com.web0zz.wallquotes.presentation.screen.quotes.quote.SingleQuoteFragment
@@ -23,21 +23,25 @@ import kotlin.properties.Delegates
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
-class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
+class QuotesFragment : BaseFragment<FragmentQuotesBinding>(
     FragmentQuotesBinding::inflate
 ) {
-    override val mViewModel: QuotesViewModel by viewModels()
+    private val mViewModel: QuotesViewModel by viewModels()
     private val safeArgs: QuotesFragmentArgs by navArgs()
+
+    override val progressBar: View = (requireActivity() as MainActivity).progressBar
 
     private lateinit var selectedCategory: String
     private var isLikedQuotes by Delegates.notNull<Boolean>()
     private lateinit var viewPager2: ViewPager2
 
-    override fun onStartInvoke() {
+    override fun onStart() {
+        super.onStart()
         if (isLikedQuotes) setLikedQuotes() else setQuotes(selectedCategory)
     }
 
-    override fun onCreateInvoke() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         safeArgs.selectedCategory?.let { selectedCategory = it }
         isLikedQuotes = safeArgs.isLikedQuotes
     }
@@ -50,12 +54,14 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
         }
     }
 
-    private fun handleViewState(viewState: QuotesViewModel.QuotesUiState) {
-        when (viewState) {
-            is QuotesViewModel.QuotesUiState.Loading -> handleLoading()
-            is QuotesViewModel.QuotesUiState.Success -> handleQuotes(viewState.data)
-            is QuotesViewModel.QuotesUiState.Error -> handleFailure(viewState.failure)
+    private fun handleViewState(uiState: QuotesUiState) {
+        setProgressStatus(uiState.isLoading)
+
+        uiState.errorMessage?.let {
+            showErrorDialog("Error on Quotes Screen", it)
         }
+
+        handleQuotes(uiState.quoteList)
     }
 
     private fun setQuotes(selectedCategory: String) {
@@ -64,10 +70,6 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
     private fun setLikedQuotes() {
         mViewModel.getLikedQuotes()
-    }
-
-    private fun handleLoading() {
-        // TODO will set loading view later
     }
 
     private fun handleQuotes(quotes: List<Quotes>) {
@@ -81,16 +83,5 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding, QuotesViewModel>(
 
         TabLayoutMediator(fragmentBinding.indicatorTabLayout, fragmentBinding.quotesViewPager2)
         { _, _ -> }.attach()
-    }
-
-    private fun handleFailure(failure: Failure) {
-        when (failure) {
-            is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
-        }
-    }
-
-    private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR", "Error on Home: $exceptionMessage")
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

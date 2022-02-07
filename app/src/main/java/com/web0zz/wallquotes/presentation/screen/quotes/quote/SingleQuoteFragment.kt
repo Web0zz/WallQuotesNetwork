@@ -2,23 +2,27 @@ package com.web0zz.wallquotes.presentation.screen.quotes.quote
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.ViewQuotesItemBinding
 import com.web0zz.wallquotes.domain.model.Quotes
+import com.web0zz.wallquotes.presentation.MainActivity
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
-class SingleQuoteFragment :
-    BaseFragment<ViewQuotesItemBinding, SingleQuoteViewModel>(ViewQuotesItemBinding::inflate) {
-    override val mViewModel: SingleQuoteViewModel by viewModels()
+class SingleQuoteFragment : BaseFragment<ViewQuotesItemBinding>(ViewQuotesItemBinding::inflate) {
+    private val mViewModel: SingleQuoteViewModel by viewModels()
+    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+
     private lateinit var selectedQuotes: Quotes
 
-    override fun onCreateInvoke() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         arguments?.apply {
             selectedQuotes = this.getParcelable(CURRENT_QUOTE)!!
         }
