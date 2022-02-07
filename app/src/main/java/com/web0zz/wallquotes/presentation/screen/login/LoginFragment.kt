@@ -1,16 +1,21 @@
 package com.web0zz.wallquotes.presentation.screen.login
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentLoginBinding
+import com.web0zz.wallquotes.presentation.MainActivity
 import com.web0zz.wallquotes.presentation.base.BaseFragment
 
-class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
-    FragmentLoginBinding::inflate
-) {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
+    private val navController by lazy {
+        activity?.let {
+            Navigation.findNavController(it, R.id.nav_host_fragmentContainerView)
+        }
+    }
+
     /*
     *   Usage of Preferences in here may be wrong usage for MVVM
     *   Implemented just for demo it will be delete later // TODO
@@ -22,12 +27,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>(
         )
     }
 
-    override val mViewModel: LoginViewModel by viewModels()
-    private val navController by lazy {
-        activity?.let {
-            Navigation.findNavController(it, R.id.nav_host_fragmentContainerView)
-        }
-    }
+    override val progressBar: View = (requireActivity() as MainActivity).progressBar
 
     override fun onCreateViewInvoke() {
         loginToHome()
