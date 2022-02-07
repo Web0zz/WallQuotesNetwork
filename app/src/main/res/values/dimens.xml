@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="dimen_60">60dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_12">12dp</dimen>
+
     <!-- Common dimens -->
     <dimen name="constraint_zero_dimen">0dp</dimen>
     <dimen name="default_elevation">10dp</dimen>

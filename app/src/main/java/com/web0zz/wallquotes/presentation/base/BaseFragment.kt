@@ -4,33 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.web0zz.wallquotes.presentation.screen.dialog.ErrorDialog
 
-abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
+abstract class BaseFragment<VB : ViewDataBinding>(
     private val inflateLayout: (LayoutInflater, ViewGroup?, Boolean) -> VB,
 ) : Fragment() {
     private var _fragmentBinding: VB? = null
     protected val fragmentBinding get() = _fragmentBinding!!
 
-    protected abstract val mViewModel: VM
+    protected abstract val progressBar: View
 
-    internal fun firstTimeCreated(savedInstanceState: Bundle?) = savedInstanceState == null
+    private var errorDialog: ErrorDialog? = null
 
-    open fun onCreateInvoke() {}
+    protected fun setProgressStatus(isLoading: Boolean) {
+        progressBar.isVisible = isLoading
+    }
+
+    fun showErrorDialog(title: String, message: String) {
+        if (errorDialog == null) {
+            errorDialog = ErrorDialog()
+        }
+        errorDialog?.apply {
+            this.title = title
+            this.message = message
+        }
+        errorDialog?.let {
+            if (!it.isVisible) {
+                it.show(requireActivity().supportFragmentManager, TAG_ERROR_DIALOG)
+            }
+        }
+    }
+
     open fun onCreateViewInvoke() {}
-    open fun onViewCreatedInvoke() {}
-    open fun onStartInvoke() {}
-
-    override fun onStart() {
-        super.onStart()
-        onStartInvoke()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        onCreateInvoke()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,13 +50,12 @@ abstract class BaseFragment<VB : ViewDataBinding, VM : BaseViewModel>(
         return fragmentBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onViewCreatedInvoke()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _fragmentBinding = null
+    }
+
+    companion object {
+        private const val TAG_ERROR_DIALOG = "error_dialog"
     }
 }

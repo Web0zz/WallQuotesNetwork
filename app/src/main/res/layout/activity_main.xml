@@ -19,6 +19,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <include
+            android:id="@+id/progress_include"
+            layout="@layout/view_progress" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragmentContainerView"
             android:name="androidx.navigation.fragment.NavHostFragment"

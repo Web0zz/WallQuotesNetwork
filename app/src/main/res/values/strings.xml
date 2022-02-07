@@ -15,7 +15,7 @@
     <string name="double_quote_background">double quote background</string>
     <string name="tags">Tags</string>
     <string name="quotes">Quotes</string>
-
+    <string name="text_ok">OK</string>
     <string name="login_state_key">LOGIN</string>
     <string name="publish_quote">Publish Quote</string>
     <string name="liked">Liked</string>
