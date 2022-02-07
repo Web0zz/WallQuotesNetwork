@@ -7,5 +7,5 @@ data class HomeUiState(
     val tags: List<Tag> = listOf(),
     val quotes: List<Quotes> = listOf(),
     val isLoading: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
 )

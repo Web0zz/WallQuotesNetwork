@@ -1,9 +1,10 @@
 package com.web0zz.wallquotes.presentation.screen.home
 
 import android.content.Intent
-import android.util.Log
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.web0zz.wallquotes.R
 import com.web0zz.wallquotes.databinding.FragmentHomeBinding
-import com.web0zz.wallquotes.domain.exception.Failure
 import com.web0zz.wallquotes.domain.model.Quotes
 import com.web0zz.wallquotes.domain.model.Tag
+import com.web0zz.wallquotes.presentation.MainActivity
 import com.web0zz.wallquotes.presentation.adapter.home.QuotesRecyclerAdapter
 import com.web0zz.wallquotes.presentation.adapter.home.TagRecyclerAdapter
 import com.web0zz.wallquotes.presentation.base.BaseFragment
@@ -27,24 +28,26 @@ import kotlinx.coroutines.launch
 
 @DelicateCoroutinesApi
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
-    FragmentHomeBinding::inflate
-) {
-    override val mViewModel: HomeViewModel by viewModels()
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private val navController by lazy {
         activity?.let {
             Navigation.findNavController(it, R.id.nav_host_fragmentContainerView)
         }
     }
 
+    private val mViewModel: HomeViewModel by viewModels()
+    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+
     private var quotesRecyclerAdapter: QuotesRecyclerAdapter? = null
     private var quotesRecyclerView: RecyclerView? = null
 
-    override fun onCreateInvoke() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onStartInvoke() {
+    override fun onStart() {
+        super.onStart()
         loadTagList()
         loadQuotesList()
     }
@@ -68,11 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    mViewModel.homeQuotesUiState.collect { handleQuotesViewState(it) }
-                }
-
-                launch {
-                    mViewModel.homeTagUiState.collect { handleTagViewState(it) }
+                    mViewModel.homeUiState.collect { handleHomeUiState(it) }
                 }
             }
         }
@@ -82,20 +81,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         }
     }
 
-    private fun handleQuotesViewState(viewState: HomeViewModel.HomeUiState) {
-        when (viewState) {
-            is HomeViewModel.HomeUiState.Loading -> handleLoading()
-            is HomeViewModel.HomeUiState.Success -> handleQuotesData(viewState.quotesData!!)
-            is HomeViewModel.HomeUiState.Error -> handleFailure(viewState.failure)
-        }
-    }
+    private fun handleHomeUiState(uiState: HomeUiState) {
+        setProgressStatus(uiState.isLoading)
 
-    private fun handleTagViewState(viewState: HomeViewModel.HomeUiState) {
-        when (viewState) {
-            is HomeViewModel.HomeUiState.Loading -> handleLoading()
-            is HomeViewModel.HomeUiState.Success -> handleTagData(viewState.tagData!!)
-            is HomeViewModel.HomeUiState.Error -> handleFailure(viewState.failure)
+        uiState.errorMessage?.let {
+            showErrorDialog("Error on Home Screen", it)
         }
+
+        handleQuotesData(uiState.quotes)
+        handleTagData(uiState.tags)
     }
 
     private fun loadQuotesList() {
@@ -193,10 +187,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
         quotesRecyclerAdapter!!.differ.submitList(quotesList)
     }
 
-    private fun handleLoading() {
-        // TODO will set loading view later
-    }
-
     private fun handleQuotesData(quotes: List<Quotes>) {
         initRecyclerViewItems(quotes)
     }
@@ -206,16 +196,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = TagRecyclerAdapter(tags, ::navigateToQuotes)
         }
-    }
-
-    private fun handleFailure(failure: Failure) {
-        when (failure) {
-            is Failure.UnknownError -> showFailureText(failure.message, failure.exceptionMessage)
-        }
-    }
-
-    private fun showFailureText(message: String, exceptionMessage: String?) {
-        Log.e("ERROR", "Error on Home: $exceptionMessage")
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }
