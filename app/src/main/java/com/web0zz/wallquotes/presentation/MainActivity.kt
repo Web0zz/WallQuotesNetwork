@@ -1,6 +1,7 @@
 package com.web0zz.wallquotes.presentation
 
 import android.view.Menu
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+    lateinit var progressBar: View
+
     private lateinit var navController: NavController
 
     // At launch, the splash screen will be display as a theme then on onCreate default theme will be set
@@ -21,6 +24,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun initUi() {
+        progressBar = activityDataBinding.progressInclude.progress
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
