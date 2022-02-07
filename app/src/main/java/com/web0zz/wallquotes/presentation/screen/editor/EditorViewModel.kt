@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,8 +26,8 @@ class EditorViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _editorUiState: MutableStateFlow<EditorUiState> =
-        MutableStateFlow(EditorUiState.Loading)
-    val editorUiState: StateFlow<EditorUiState> = _editorUiState
+        MutableStateFlow(EditorUiState(isLoading = true))
+    val editorUiState: StateFlow<EditorUiState> get() = _editorUiState
 
     fun insertQuotes(quotes: Quotes) {
         job?.cancel()
@@ -55,20 +56,20 @@ class EditorViewModel @Inject constructor(
     }
 
     private fun setLoading() {
-        _editorUiState.value = EditorUiState.Loading
+        _editorUiState.update { currentUiState ->
+            currentUiState.copy(isLoading = true)
+        }
     }
 
     private fun handleActionTrue(isDone: UseCase.None) {
-        _editorUiState.value = EditorUiState.Success(true)
+        _editorUiState.update { currentUiState ->
+            currentUiState.copy(isDone = true)
+        }
     }
 
     private fun handleFailure(failure: Failure) {
-        _editorUiState.value = EditorUiState.Error(failure)
-    }
-
-    sealed class EditorUiState {
-        object Loading : EditorUiState()
-        data class Success(val isDone: Boolean) : EditorUiState()
-        data class Error(val failure: Failure) : EditorUiState()
+        _editorUiState.update { currentUiState ->
+            currentUiState.copy(errorMessage = failure.message)
+        }
     }
 }
