@@ -19,6 +19,10 @@ object AndroidDependencies {
     const val navUiLib = "androidx.navigation:navigation-ui-ktx:${Versions.navVersion}"
 }
 
+object KtDependencies {
+    const val ktStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.ktVersion}"
+}
+
 object RoomDependencies {
     const val roomRuntimeLib = "androidx.room:room-runtime:${Versions.roomVersion}"
     const val roomCompilerLib = "androidx.room:room-compiler:${Versions.roomVersion}"
@@ -42,4 +46,8 @@ object LintDependencies {
     const val lintChecksLib = "com.android.tools.lint:lint-checks:${Versions.lintVersion}"
     const val lintLib = "com.android.tools.lint:lint:${Versions.lintVersion}"
     const val lintTestsLib = "com.android.tools.lint:lint-tests:${Versions.lintVersion}"
+}
+
+object TestDependencies {
+    const val junitLib = "junit:junit:${Versions.junitVersion}"
 }

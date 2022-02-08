@@ -9,10 +9,15 @@ targetCompatibility = "1.8"
 dependencies {
     compileOnly LintDependencies.lintApiLib
     compileOnly LintDependencies.lintChecksLib
+    compileOnly KtDependencies.ktStdlib
 
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    testImplementation "junit:junit:4.13.2"
+    testImplementation TestDependencies.junitLib
     testImplementation LintDependencies.lintLib
     testImplementation LintDependencies.lintTestsLib
+}
+
+jar {
+    manifest {
+        attributes("Lint-Registry-V2": "com.web0zz.lintrules.MyIssueRegistry")
+    }
 }

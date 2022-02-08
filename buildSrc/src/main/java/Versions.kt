@@ -1,4 +1,7 @@
 object Versions {
+    // Kotlin
+    const val ktVersion = "1.6.10"
+
     // Androidx
     const val coreVersion = "1.7.0"
     const val appcompatVersion = "1.4.0"
@@ -23,4 +26,7 @@ object Versions {
 
     // Lint
     const val lintVersion = "30.1.1"
+
+    // Test
+    const val junitVersion = "4.13.2"
 }
