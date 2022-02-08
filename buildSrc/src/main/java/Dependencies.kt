@@ -36,3 +36,10 @@ object KtResultDependencies {
         "com.michael-bull.kotlin-result:kotlin-result-coroutines:${Versions.ktResultVersion}"
 }
 
+object LintDependencies {
+    const val lintApiLib =
+        "com.android.tools.lint:lint-api:${Versions.lintVersion}"
+    const val lintChecksLib = "com.android.tools.lint:lint-checks:${Versions.lintVersion}"
+    const val lintLib = "com.android.tools.lint:lint:${Versions.lintVersion}"
+    const val lintTestsLib = "com.android.tools.lint:lint-tests:${Versions.lintVersion}"
+}

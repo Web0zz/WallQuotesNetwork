@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "WallQuotes"
 include ':app'
+include ':lintRules'

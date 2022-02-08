@@ -43,6 +43,8 @@ android {
 }
 
 dependencies {
+    lintChecks project(':lintRules')
+
     // Android
     implementation AndroidDependencies.coreLib
     implementation AndroidDependencies.appcompatLib

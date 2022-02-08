@@ -20,4 +20,7 @@ object Versions {
 
     // Kotlin-Result
     const val ktResultVersion = "1.1.13"
+
+    // Lint
+    const val lintVersion = "30.1.1"
 }
