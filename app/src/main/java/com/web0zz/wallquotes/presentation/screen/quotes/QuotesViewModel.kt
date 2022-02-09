@@ -63,13 +63,13 @@ class QuotesViewModel @Inject constructor(
 
     private fun handleQuotesList(quotesData: List<Quotes>) {
         _quotesUiState.update { currentUiState ->
-            currentUiState.copy(quoteList = quotesData)
+            currentUiState.copy(isLoading = false, quoteList = quotesData)
         }
     }
 
     private fun handleFailure(failure: Failure) {
         _quotesUiState.update { currentUiState ->
-            currentUiState.copy(errorMessage = failure.message)
+            currentUiState.copy(isLoading = false, errorMessage = failure.message)
         }
     }
 }

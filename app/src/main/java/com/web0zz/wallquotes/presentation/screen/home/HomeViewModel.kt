@@ -69,7 +69,8 @@ class HomeViewModel @Inject constructor(
 
         deleteQuotesUseCase(quotes, viewModelScope) {
             job = viewModelScope.launch {
-                it.collect { getAllQuotes() }
+                it.onStart { setLoading() }
+                    .collect { getAllQuotes() }
             }
         }
     }
@@ -79,7 +80,8 @@ class HomeViewModel @Inject constructor(
 
         updateQuotesUseCase(quotes, viewModelScope) {
             job = viewModelScope.launch {
-                it.collect { getAllQuotes() }
+                it.onStart { setLoading() }
+                    .collect { getAllQuotes() }
             }
         }
     }
@@ -92,19 +94,19 @@ class HomeViewModel @Inject constructor(
 
     private fun handleQuotesList(quotesData: List<Quotes>) {
         _homeUiState.update { currentUiState ->
-            currentUiState.copy(quotes = quotesData)
+            currentUiState.copy(isLoading = false, quotes = quotesData)
         }
     }
 
     private fun handleTagList(tagData: List<Tag>) {
         _homeUiState.update { currentUiState ->
-            currentUiState.copy(tags = tagData)
+            currentUiState.copy(isLoading = false, tags = tagData)
         }
     }
 
     private fun handleFailure(failure: Failure) {
         _homeUiState.update { currentUiState ->
-            currentUiState.copy(errorMessage = failure.message)
+            currentUiState.copy(isLoading = false, errorMessage = failure.message)
         }
     }
 }

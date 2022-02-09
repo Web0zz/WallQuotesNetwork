@@ -63,13 +63,13 @@ class EditorViewModel @Inject constructor(
 
     private fun handleActionTrue(isDone: UseCase.None) {
         _editorUiState.update { currentUiState ->
-            currentUiState.copy(isDone = true)
+            currentUiState.copy(isLoading = false, isDone = true)
         }
     }
 
     private fun handleFailure(failure: Failure) {
         _editorUiState.update { currentUiState ->
-            currentUiState.copy(errorMessage = failure.message)
+            currentUiState.copy(isLoading = false, errorMessage = failure.message)
         }
     }
 }
