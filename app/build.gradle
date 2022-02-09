@@ -45,6 +45,9 @@ android {
 dependencies {
     lintChecks project(path: ':lintRules')
 
+    // LeakCanary
+    debugImplementation LeakCanaryDependencies.leakcanaryLib
+
     // Android
     implementation AndroidDependencies.coreLib
     implementation AndroidDependencies.appcompatLib

@@ -48,6 +48,11 @@ object LintDependencies {
     const val lintTestsLib = "com.android.tools.lint:lint-tests:${Versions.lintVersion}"
 }
 
+object LeakCanaryDependencies {
+    const val leakcanaryLib = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanaryVersion}"
+
+}
+
 object TestDependencies {
     const val junitLib = "junit:junit:${Versions.junitVersion}"
 }

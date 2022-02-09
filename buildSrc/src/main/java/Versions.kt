@@ -27,6 +27,9 @@ object Versions {
     // Lint
     const val lintVersion = "30.1.1"
 
+    // Leakcanary
+    const val leakcanaryVersion = "2.8.1"
+
     // Test
     const val junitVersion = "4.13.2"
 }
