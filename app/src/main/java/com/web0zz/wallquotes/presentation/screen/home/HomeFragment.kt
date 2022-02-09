@@ -36,7 +36,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private val mViewModel: HomeViewModel by viewModels()
-    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+    override val progressBar: View by lazy {
+        (requireActivity() as MainActivity).progressBar
+    }
 
     private var quotesRecyclerAdapter: QuotesRecyclerAdapter? = null
     private var quotesRecyclerView: RecyclerView? = null

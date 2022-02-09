@@ -27,7 +27,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         )
     }
 
-    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+    override val progressBar: View by lazy {
+        (requireActivity() as MainActivity).progressBar
+    }
 
     override fun onCreateViewInvoke() {
         loginToHome()

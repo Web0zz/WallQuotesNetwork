@@ -29,7 +29,9 @@ class QuotesFragment : BaseFragment<FragmentQuotesBinding>(
     private val mViewModel: QuotesViewModel by viewModels()
     private val safeArgs: QuotesFragmentArgs by navArgs()
 
-    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+    override val progressBar: View by lazy {
+        (requireActivity() as MainActivity).progressBar
+    }
 
     private lateinit var selectedCategory: String
     private var isLikedQuotes by Delegates.notNull<Boolean>()

@@ -31,7 +31,9 @@ class EditorFragment : BaseFragment<FragmentEditorBinding>(FragmentEditorBinding
     }
 
     private val mViewModel: EditorViewModel by viewModels()
-    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+    override val progressBar: View by lazy {
+        (requireActivity() as MainActivity).progressBar
+    }
 
     private val safeArgs: EditorFragmentArgs by navArgs()
 

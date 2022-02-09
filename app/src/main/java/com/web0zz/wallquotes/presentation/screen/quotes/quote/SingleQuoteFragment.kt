@@ -17,7 +17,9 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 @AndroidEntryPoint
 class SingleQuoteFragment : BaseFragment<ViewQuotesItemBinding>(ViewQuotesItemBinding::inflate) {
     private val mViewModel: SingleQuoteViewModel by viewModels()
-    override val progressBar: View = (requireActivity() as MainActivity).progressBar
+    override val progressBar: View by lazy {
+        (requireActivity() as MainActivity).progressBar
+    }
 
     private lateinit var selectedQuotes: Quotes
 
