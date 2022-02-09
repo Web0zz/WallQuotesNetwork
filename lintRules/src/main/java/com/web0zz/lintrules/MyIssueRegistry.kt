@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.web0zz.lintrules
 
 import com.android.tools.lint.client.api.IssueRegistry

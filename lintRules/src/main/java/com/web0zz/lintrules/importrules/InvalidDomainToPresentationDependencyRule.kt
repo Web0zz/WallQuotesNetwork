@@ -5,7 +5,7 @@ class InvalidDomainToPresentationDependencyRule : InvalidImportRules {
     override fun isAllowedImport(
         visitingPackage: String,
         visitingClassName: String,
-        importStatement: String
+        importStatement: String,
     ): Boolean =
         !((isDomainPackage(visitingPackage)) && isPresentationPackageImport(importStatement))
 

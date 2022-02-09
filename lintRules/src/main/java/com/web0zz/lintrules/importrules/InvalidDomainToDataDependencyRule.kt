@@ -4,7 +4,7 @@ class InvalidDomainToDataDependencyRule : InvalidImportRules {
     override fun isAllowedImport(
         visitingPackage: String,
         visitingClassName: String,
-        importStatement: String
+        importStatement: String,
     ): Boolean = !((isDomainPackage(visitingPackage)) && isDataPackage(importStatement))
 
     override fun getMessage(): String = "Domain class should not import from data package"
