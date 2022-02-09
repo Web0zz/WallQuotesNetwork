@@ -13,7 +13,7 @@ import org.jetbrains.uast.getContainingUFile
 
 @Suppress("UnstableApiUsage")
 class ImportDetector : Detector(), Detector.UastScanner {
-    val rules = listOf(
+    private val rules = listOf(
         InvalidDomainToDataDependencyRule(),
         InvalidDomainToPresentationDependencyRule()
     )

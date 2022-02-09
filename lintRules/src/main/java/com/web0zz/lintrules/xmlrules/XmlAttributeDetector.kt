@@ -7,13 +7,14 @@ import com.android.tools.lint.detector.api.Issue
 import com.android.tools.lint.detector.api.LayoutDetector
 import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
-import com.android.tools.lint.detector.api.TextFormat
 import com.android.tools.lint.detector.api.XmlContext
 import org.w3c.dom.Attr
 
 @Suppress("UnstableApiUsage")
 class XmlAttributeDetector : LayoutDetector() {
-    // TODO add more attribute rules
+    private val rules = listOf(
+        InvalidLayoutSizeAttributeRule()
+    )
 
     override fun getApplicableAttributes(): Collection<String> {
         return listOf(
@@ -23,27 +24,25 @@ class XmlAttributeDetector : LayoutDetector() {
     }
 
     override fun visitAttribute(context: XmlContext, attribute: Attr) {
-        val matchResult = "([0-9]+)dp".toRegex().matchEntire(attribute.value)
-
-        if (matchResult != null) {
-            context.report(
-                ISSUE_XML_ATTRIBUTE_DETECTOR,
-                context.getLocation(attribute),
-                ISSUE_XML_ATTRIBUTE_DETECTOR.getExplanation(TextFormat.TEXT)
-            )
+        rules.forEach { rule ->
+            if (!rule.isAllowedAttributeUsage(attribute.value)) {
+                context.report(
+                    ISSUE_XML_ATTRIBUTE_DETECTOR,
+                    context.getLocation(attribute),
+                    rule.getMessage()
+                )
+            }
         }
     }
 
     companion object {
+        private const val MESSAGE = "Lint detector for detecting invalid xml attribute"
+
         @JvmField
         val ISSUE_XML_ATTRIBUTE_DETECTOR = Issue.create(
-            id = "XmlIssue",
-            briefDescription = "Lint detector for unrecommended xml attributes declaration",
-            explanation = """
-               Declared views in layout resource should not contain hardcoded dimension values.
-               
-               It makes harder to add new feature on later.
-            """,
+            id = "XmlIssueDetector",
+            briefDescription = MESSAGE,
+            explanation = MESSAGE,
             category = Category.PRODUCTIVITY,
             priority = 5,
             severity = Severity.WARNING,
