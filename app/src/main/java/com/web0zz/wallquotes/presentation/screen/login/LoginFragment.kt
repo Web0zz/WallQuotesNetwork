@@ -32,6 +32,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun onCreateViewInvoke() {
+        setProgressStatus(false)
+
         loginToHome()
     }
 

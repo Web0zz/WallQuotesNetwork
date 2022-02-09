@@ -26,7 +26,7 @@ class EditorViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val _editorUiState: MutableStateFlow<EditorUiState> =
-        MutableStateFlow(EditorUiState(isLoading = true))
+        MutableStateFlow(EditorUiState())
     val editorUiState: StateFlow<EditorUiState> get() = _editorUiState
 
     fun insertQuotes(quotes: Quotes) {
