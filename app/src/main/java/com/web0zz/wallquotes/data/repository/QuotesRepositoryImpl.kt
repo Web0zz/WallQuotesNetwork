@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class QuotesRepositoryImpl @Inject constructor(
@@ -30,11 +31,14 @@ class QuotesRepositoryImpl @Inject constructor(
                     mapQuotesEntity(it)
                 }
 
+                Timber.d("Successfully returned quotes data ${data.joinToString(",")}")
                 Ok(data)
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_READING, e.localizedMessage))
             }
 
+        Timber.d("Quotes result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 
@@ -45,11 +49,14 @@ class QuotesRepositoryImpl @Inject constructor(
                     mapQuotesEntity(it)
                 }
 
+                Timber.d("Successfully returned quotes by tag data ${data.joinToString(",")}")
                 Ok(data)
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_READING, e.localizedMessage))
             }
 
+        Timber.d("Quotes by tag result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 
@@ -60,11 +67,14 @@ class QuotesRepositoryImpl @Inject constructor(
                     mapQuotesEntity(it)
                 }
 
+                Timber.d("Successfully returned liked quotes data ${data.joinToString(",")}")
                 Ok(data)
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_READING, e.localizedMessage))
             }
 
+        Timber.d("Liked quotes result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 
@@ -74,11 +84,14 @@ class QuotesRepositoryImpl @Inject constructor(
                 val data = mapQuotesToEntity(quotes)
                 quotesDao.insertQuotes(data)
 
+                Timber.d("Quote inserted to database ${data.id}:${data.authorName}:${data.body}")
                 Ok(UseCase.None())
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_INSERT, e.localizedMessage))
             }
 
+        Timber.d("Insert result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 
@@ -88,11 +101,14 @@ class QuotesRepositoryImpl @Inject constructor(
                 val data = mapQuotesToEntity(quotes)
                 quotesDao.updateQuotes(data)
 
+                Timber.d("Quote updated on database ${data.id}:${data.authorName}:${data.body}")
                 Ok(UseCase.None())
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_UPDATE, e.localizedMessage))
             }
 
+        Timber.d("Update result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 
@@ -102,11 +118,14 @@ class QuotesRepositoryImpl @Inject constructor(
                 val data = mapQuotesToEntity(quotes)
                 quotesDao.deleteQuotes(data)
 
+                Timber.d("Quote deleted from database ${data.id}:${data.authorName}:${data.body}")
                 Ok(UseCase.None())
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(FAILED_DELETE, e.localizedMessage))
             }
 
+        Timber.d("Delete result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 }

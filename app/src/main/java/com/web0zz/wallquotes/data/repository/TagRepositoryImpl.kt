@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 import javax.inject.Inject
 
 class TagRepositoryImpl @Inject constructor(
@@ -25,11 +26,14 @@ class TagRepositoryImpl @Inject constructor(
                     mapTagEntity(it)
                 }
 
+                Timber.d("Successfully returned tag data ${data.joinToString(",")}")
                 Ok(data)
             } catch (e: Exception) {
+                Timber.d("Exception caught ${e.localizedMessage}")
                 Err(Failure.UnknownError(Constants.FAILED_READING, e.localizedMessage))
             }
 
+        Timber.d("Tag result emitted ${result::class}")
         emit(result)
     }.flowOn(Dispatchers.IO)
 }
