@@ -71,6 +71,9 @@ dependencies {
     // Kotlin-Result
     implementation KtResultDependencies.ktResultLib
     implementation KtResultDependencies.ktResultCoroutinesLib
+
+    // Timber
+    implementation TimberDependencies.timberLib
 }
 
 ktlint {

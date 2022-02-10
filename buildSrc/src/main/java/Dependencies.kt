@@ -50,7 +50,10 @@ object LintDependencies {
 
 object LeakCanaryDependencies {
     const val leakcanaryLib = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanaryVersion}"
+}
 
+object TimberDependencies {
+    const val timberLib = "com.jakewharton.timber:timber:${Versions.timberVersion}"
 }
 
 object TestDependencies {

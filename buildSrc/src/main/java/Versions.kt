@@ -30,6 +30,9 @@ object Versions {
     // Leakcanary
     const val leakcanaryVersion = "2.8.1"
 
+    // Timber
+    const val timberVersion = "5.0.1"
+
     // Test
     const val junitVersion = "4.13.2"
 }
