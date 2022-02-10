@@ -12,9 +12,9 @@ class MainApplication : Application() {
     }
 
     private fun initLogger() {
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Timber.plant(
-                object: Timber.DebugTree() {
+                object : Timber.DebugTree() {
                     override fun createStackElementTag(element: StackTraceElement): String {
                         return "(${element.fileName}:${element.lineNumber}:${Thread.currentThread().name})#${element.methodName}"
                     }

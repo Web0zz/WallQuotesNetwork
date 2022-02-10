@@ -49,7 +49,8 @@ object LintDependencies {
 }
 
 object LeakCanaryDependencies {
-    const val leakcanaryLib = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanaryVersion}"
+    const val leakcanaryLib =
+        "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanaryVersion}"
 }
 
 object TimberDependencies {
